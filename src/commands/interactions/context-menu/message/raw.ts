@@ -1,8 +1,10 @@
 import { Constants, Interaction, Utils } from "detritus-client";
 import { BaseContextMenuMessageCommand, ContextMenuMessageArgs } from "../../basecommand";
 
+export const COMMAND_NAME = "Raw Content";
+
 export default class RawContentCommand extends BaseContextMenuMessageCommand {
-    name = "Raw Content";
+    name = COMMAND_NAME;
 
     async run(context: Interaction.InteractionContext, args: ContextMenuMessageArgs) {
         const { content } = args.message;

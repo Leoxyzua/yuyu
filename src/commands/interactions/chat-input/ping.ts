@@ -1,8 +1,10 @@
 import { Interaction } from "detritus-client";
 import { BaseCommand } from "../basecommand";
 
+export const COMMAND_NAME = 'ping';
+
 export default class PingCommand extends BaseCommand<unknown> {
-    name = 'ping';
+    name = COMMAND_NAME;
     description = "Pong! :D";
 
     constructor() {

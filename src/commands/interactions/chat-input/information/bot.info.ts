@@ -6,8 +6,10 @@ import pkgjson from '../../../../../package.json';
 
 const { codestring, url, timestamp } = Utils.Markup;
 
+export const COMMAND_NAME = "botinfo";
+
 export default class BotInfoCommand extends BaseCommand {
-    name = "botinfo";
+    name = COMMAND_NAME;
     description = "Sobre mí";
 
     constructor() {
