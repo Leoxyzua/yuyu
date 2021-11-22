@@ -42,6 +42,7 @@ export class CreateBanCommand extends BaseSubCommand {
     onBeforeRun(context: Interaction.InteractionContext, { target }: CommandArgs) {
         if (!context.guild || !context.me) return false;
         if (!context.guild.members.has(target.id)) return true;
+        if (target instanceof Structures.Member && target.highestRole?.position! > context.member?.highestRole?.position!) return false;
 
         return context.me.canEdit(target as any) && (context.me.id !== target.id) && (target.id !== context.user.id);
     }
