@@ -1,6 +1,6 @@
 {
   "name": "yuyu",
-  "description": "A discord bot made for the Manitos Dou sever",
+  "description": "A discord bot made for the Manitos Dou server",
   "author": "Leoxyzua",
   "version": "1.0.1",
   "main": "src/index.ts",
