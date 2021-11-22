@@ -2,7 +2,7 @@ import { Constants, Interaction, Structures, Utils } from "detritus-client";
 import { Succes, Warning } from "../../../../utils/icons";
 import { BaseCommand } from "../../basecommand";
 
-export const COMMAND_NAME = "";
+export const COMMAND_NAME = "role";
 
 export interface CommandArgsBefore {
     member: Structures.Member | Structures.User;
