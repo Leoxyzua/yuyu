@@ -13,7 +13,8 @@ export enum categories {
 
 export const Servers = [
     "876339668956893216", // Manitos Dou
-    "882716951233839176"  // Testing
+    "882716951233839176", // Testing
+    "846922026987946035"  // More Testing
 ];
 
 export const PermissionUnRaw = Object.freeze({
