@@ -1,7 +1,6 @@
 import { ShardClient } from "detritus-client";
 import { RequestTypes } from 'detritus-client-rest';
 import { inspect } from 'util';
-import { Servers } from "./constants";
 
 export function removeElement(array: any[], target: any) {
     return array.filter(element => {
@@ -38,9 +37,8 @@ async function handlePermissions(client: ShardClient) {
     const data: Array<DataPermission> = [];
 
     for (const guild of client.guilds.toArray()) {
-        if (!Servers.includes(guild.id)) continue;
         for (const command of client.interactionCommandClient?.commands.toArray()!) {
-            if (!['mod', 'config'].includes(command.metadata.category) || !command.permissions) continue;
+            if (!['mod', 'config'].includes(command.metadata.category) || !command.permissions || command.defaultPermission !== false) continue;
             if (!command.ids.size && !command.ids.first()) continue;
             const id = command.ids.first()!;
 
@@ -62,7 +60,6 @@ async function handlePermissions(client: ShardClient) {
 
         for (const sub of data) {
             for (const permission of sub.permissions) {
-                console.log(guild.name, permission)
                 if (!(guild.members.has(permission.id) || guild.roles.has(permission.id)))
                     sub.permissions = removeElement(sub.permissions, permission)
             }

@@ -1,5 +1,5 @@
 import { Interaction, Constants, Utils, Structures } from "detritus-client";
-import { PermissionUnRaw, Servers } from "../../utils/constants";
+import { PermissionUnRaw, Servers, TestServers } from "../../utils/constants";
 import { Warning, Error } from "../../utils/icons";
 
 import { inspect } from 'util';

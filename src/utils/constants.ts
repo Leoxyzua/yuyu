@@ -11,10 +11,13 @@ export enum categories {
     misc = "Extra"
 }
 
-export const Servers = [
-    "876339668956893216", // Manitos Dou
+export const TestServers = [
     "882716951233839176", // Testing
     "846922026987946035"  // More Testing
+]
+
+export const Servers = [
+    "876339668956893216" // Manitos Dou
 ];
 
 export const PermissionUnRaw = Object.freeze({
