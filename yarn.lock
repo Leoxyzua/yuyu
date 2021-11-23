@@ -643,6 +643,12 @@ fs.realpath@^1.0.0:
   resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
+fumo-api@Leoxyzua/fumo-api#master:
+  version "2.0.0"
+  resolved "https://codeload.github.com/Leoxyzua/fumo-api/tar.gz/2f5c61715c378623e94f281d7c53b2248e334cb7"
+  dependencies:
+    node-fetch "^2.6.1"
+
 functional-red-black-tree@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz"

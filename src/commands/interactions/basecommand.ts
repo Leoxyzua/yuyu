@@ -60,7 +60,7 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
 
     constructor(data: Interaction.InteractionCommandOptions = {}) {
         super(Object.assign({
-            defaultPermission: process.env.mode === 'development' ? !['mod', 'config'].includes(data.metadata?.category) : false,
+            defaultPermission: process.env.mode === 'development' ? !['mod', 'config'].includes(data.metadata?.category) : true,
             guildIds: process.env.mode === 'development' ? Servers : TestServers,
             ratelimits: [
                 {

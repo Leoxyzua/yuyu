@@ -14,6 +14,7 @@
   "dependencies": {
     "detritus-client": "0.16.4-beta.6",
     "dotenv": "^10.0.0",
+    "fumo-api": "Leoxyzua/fumo-api#master",
     "mongoose": "^6.0.13",
     "ms": "^2.1.3",
     "redis": "^3.1.2"
