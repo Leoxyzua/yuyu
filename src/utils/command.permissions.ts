@@ -37,6 +37,7 @@ async function handlePermissions(client: ShardClient) {
     const data: Array<DataPermission> = [];
 
     for (const guild of client.guilds.toArray()) {
+        if (process.env.mode !== 'development') continue;
         for (const command of client.interactionCommandClient?.commands.toArray()!) {
             if (!['mod', 'config'].includes(command.metadata.category) || !command.permissions || command.defaultPermission !== false) continue;
             if (!command.ids.size && !command.ids.first()) continue;
