@@ -8,6 +8,7 @@ export enum categories {
     config = "Configuración",
     mod = "Moderación",
     info = "Información",
+    fun = "Diversión",
     misc = "Extra"
 }
 
