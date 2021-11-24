@@ -5,6 +5,7 @@ import {
     ShardClient
 } from 'detritus-client';
 import { GatewayIntents } from 'detritus-client-socket/lib/constants.js';
+import { inspect } from 'util'
 
 import './database';
 import './utils/detritus.esm';
@@ -58,8 +59,8 @@ try {
 
     await messageClient.addMultipleIn('src/commands/message');
     await messageClient.run();
-} catch (error) {
-    console.error('Something went wrong with the clients', error)
+} catch (error: any) {
+    console.error('Something went wrong with the clients', error.raw?.errors ? inspect(error.raw.errors, { depth: 7 }) : error);
 }
 
 console.log(`Logged in as ${client.user!.tag}, with ${interactionClient.commands.size} [/] commands and a shard count of ${client.shardCount} in ${client.guilds.size} guilds.`);
