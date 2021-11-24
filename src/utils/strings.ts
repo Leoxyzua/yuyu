@@ -1,6 +1,10 @@
 import { Interaction } from "detritus-client";
 import { categories } from "./constants";
 
+export function chunkString(str: string, length = 2000) {
+    return str.trim().match(new RegExp(`.{1,${length}}`, 'g'))
+}
+
 export function parseStrings(strings: any[]): string[] {
     const all: string[] = [];
 

@@ -59,6 +59,9 @@ export default class Paginator implements Options {
         if (options.timeout !== undefined)
             this.timeout = options.timeout
 
+        if (options.pageObject !== undefined)
+            this.pageObject = options.pageObject
+
         this.lastPage = options.lastPage ?? this.baseArray?.length
 
         console.log(`Paginator started by ${context.user.tag} in channel ${context.channel?.name}`)

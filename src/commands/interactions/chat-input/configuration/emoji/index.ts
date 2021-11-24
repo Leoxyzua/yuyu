@@ -2,6 +2,7 @@ import { Constants } from "detritus-client";
 import { BaseCommand } from "../../../basecommand";
 import { CreateEmojiCommands } from "./create"
 import { DeleteEmojiCommand } from "./delete";
+import { EmojiListCommand } from "./list";
 
 export const COMMAND_NAME = "emoji";
 
@@ -18,7 +19,8 @@ export default class EmojiCommands extends BaseCommand {
             metadata: { category: 'config' },
             options: [
                 new CreateEmojiCommands(),
-                new DeleteEmojiCommand()
+                new DeleteEmojiCommand(),
+                new EmojiListCommand()
             ]
         })
     }
