@@ -1,6 +1,7 @@
 import { Constants, Interaction, Utils } from "detritus-client"
 import { BaseSubCommand } from "../../../basecommand"
 import Paginator from "../../../../../utils/paginator"
+import { Colors } from "../../../../../utils/constants"
 
 export interface CommandArgs {
     filter: string // 'all' | 'mine' | 'animated' | 'not_animated'
@@ -62,17 +63,26 @@ export class EmojiListCommand extends BaseSubCommand {
             }
         })
 
+        if (!search) return context.editOrRespond({
+            content: `No se encontraron emojis con el filtro **${args.filter}**`,
+            flags: Constants.MessageFlags.EPHEMERAL
+        })
+
         const EMOJIS_PER_PAGE = 10
+        const TOTAL_PAGES = Math.ceil(search.length / EMOJIS_PER_PAGE)
 
         const paginator = new Paginator(context, {
             baseArray: search,
             objectsPerPage: EMOJIS_PER_PAGE,
             pageObject: 0,
-            lastPage: Math.ceil(search.length / EMOJIS_PER_PAGE),
+            lastPage: TOTAL_PAGES,
+            content: (page) => `Pagina **${page + "/" + TOTAL_PAGES}**`,
             onPage: (page, emojis?: typeof search) => {
                 const embed = new Utils.Embed()
+                    .setColor(Colors.INVISIBLE)
 
-                if (emojis) embed.setDescription(emojis.map((emoji) => emoji.toString()).join(' '))
+                if (emojis) embed.setDescription(emojis.map((emoji) => `> ${emoji.name} ${emoji}`).join('\n'))
+                else embed.setDescription(`No hay emojis para mostrar`)
 
                 return embed
             }

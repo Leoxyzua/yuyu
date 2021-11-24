@@ -37,7 +37,6 @@ export class CreateMultipleEmojisCommand extends BaseSubCommand {
                     if (matches.length) {
                         for (const { name, id, animated } of matches) {
                             if (name && id) {
-                                console.log(animated)
                                 const format = (animated) ? 'gif' : 'png';
                                 const url = Endpoints.CDN.URL + Endpoints.CDN.EMOJI(id, format) + `?size=${animated ? 80 : 160}`;
 
@@ -71,7 +70,6 @@ export class CreateMultipleEmojisCommand extends BaseSubCommand {
         const names = [];
 
         for (const { url, name } of args.emojis) {
-            console.log(url)
             const image = await fetch(url)
                 .then((res) => res.buffer())
                 .catch(() => undefined) as Buffer;

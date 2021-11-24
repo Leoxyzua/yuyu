@@ -85,23 +85,25 @@ export default class Paginator implements Options {
             onTimeout: this.cancel.bind(this)
         })
 
-        row.createButton({
-            customId: EmojiNames.PREVIOUS,
-            disabled: this.page === 1,
-            ...FormatEmoji(Emojis.PREVIOUS)
-        })
+        if (!(this.page === 1 && this.page === this.lastPage)) {
+            row.createButton({
+                customId: EmojiNames.PREVIOUS,
+                disabled: this.page === 1,
+                ...FormatEmoji(Emojis.PREVIOUS)
+            })
 
-        row.createButton({
-            customId: EmojiNames.CANCEL,
-            style: Constants.MessageComponentButtonStyles.DANGER,
-            ...FormatEmoji(Emojis.CANCEL)
-        })
+            row.createButton({
+                customId: EmojiNames.CANCEL,
+                style: Constants.MessageComponentButtonStyles.DANGER,
+                ...FormatEmoji(Emojis.CANCEL)
+            })
 
-        row.createButton({
-            customId: EmojiNames.NEXT,
-            disabled: this.page === this.lastPage,
-            ...FormatEmoji(Emojis.NEXT)
-        })
+            row.createButton({
+                customId: EmojiNames.NEXT,
+                disabled: this.page === this.lastPage,
+                ...FormatEmoji(Emojis.NEXT)
+            })
+        }
 
         return row
     }
