@@ -37,7 +37,7 @@ export default class Paginator implements Options {
     content?: Content
     onPage: OnPage
     baseArray?: any[] = []
-    objectsPerPage?= 3
+    objectsPerPage?: number
     timeout?= 1000 * 60
     page = 1
     lastPage?: number
@@ -65,11 +65,11 @@ export default class Paginator implements Options {
     }
 
     async cancel() {
-        const { embed, embeds } = await this.currentPage()
+        const { embed, content, embeds } = await this.currentPage()
         await this.context.editOrRespond({
             embed,
             embeds,
-            content: 'Cancelado.',
+            content: content ? `~~${content}~~` : undefined,
             components: []
         })
     }
