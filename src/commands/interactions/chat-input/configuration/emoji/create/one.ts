@@ -4,7 +4,7 @@ import { BaseSubCommand } from "../../../../basecommand";
 import { parseEmojiName } from "..";
 import fetch from 'node-fetch';
 
-const CDN_URL_REGEX = /(https?:\/\/.*\.(?:png|jpg|gif))/;
+export const CDN_URL_REGEX = /(https?:\/\/.*\.(?:png|jpg|gif))/;
 
 export const COMMAND_NAME = "one";
 
