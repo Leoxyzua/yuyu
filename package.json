@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
+    "@types/ms": "^0.7.31",
     "detritus-client": "0.16.4-beta.6",
     "dotenv": "^10.0.0",
     "fumo-api": "Leoxyzua/fumo-api#master",
