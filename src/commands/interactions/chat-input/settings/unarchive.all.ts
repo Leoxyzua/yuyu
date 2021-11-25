@@ -10,7 +10,7 @@ export default class UnarchiveAllThreadsCommand extends BaseCommand {
 
     constructor() {
         super({
-            metadata: { category: 'config' },
+            metadata: { category: 'settings' },
             ratelimits: [{
                 type: 'guild',
                 duration: 10000,

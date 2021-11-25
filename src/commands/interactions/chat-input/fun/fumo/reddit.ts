@@ -3,7 +3,7 @@ import { BaseSubCommand } from "../../../basecommand"
 import redditFetch from "../../../../../utils/reddit.fetch"
 import Paginator from "../../../../../utils/paginator"
 import { Colors } from "../../../../../utils/constants"
-import { CDN_URL_REGEX } from "../../configuration/emoji/create/one"
+import { CDN_URL_REGEX } from "../../settings/emoji/create/one"
 import { Error } from "../../../../../utils/icons"
 
 const { bold, url } = Utils.Markup

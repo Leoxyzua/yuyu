@@ -5,7 +5,7 @@ export enum Colors {
 }
 
 export enum categories {
-    config = "Configuración",
+    settings = "Configuración",
     mod = "Moderación",
     info = "Información",
     fun = "Diversión",

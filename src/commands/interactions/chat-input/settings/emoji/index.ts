@@ -16,7 +16,7 @@ export default class EmojiCommands extends BaseCommand {
 
     constructor() {
         super({
-            metadata: { category: 'config' },
+            metadata: { category: 'settings' },
             options: [
                 new CreateEmojiCommands(),
                 new DeleteEmojiCommand(),
