@@ -1,6 +1,5 @@
 import { Interaction, Utils } from "detritus-client"
 import { BaseSubCommand } from "../../../basecommand"
-import { ReplyUp, ReplyDown, ReplyMiddle } from "../../../../../utils/icons"
 import { FumoData } from "fumo-api"
 import { Client } from "."
 import { Colors } from "../../../../../utils/constants"
@@ -23,34 +22,32 @@ export class FumoListCommand extends BaseSubCommand {
         const paginator = new Paginator(context, {
             baseArray: list,
             objectsPerPage: 4,
+            // pageObject: 0, TODO: fix paginator not showing first 5 items
             content: (page) => {
                 const pages = Math.ceil(list.length / 4)
                 return `Pagina ${bold(page + "/" + pages)}`
             },
             onPage: (_page, fumos?: FumoData[]) => {
                 const fields: Field[] = []
-                let i = 0
 
                 if (fumos) {
                     for (const fumo of fumos) {
-                        i++
-
                         const index = list.indexOf(fumo) - 4
-                        const emoji = i === 1 ? ReplyUp : i === 4 ? ReplyDown : ReplyMiddle
 
                         fields.push({
-                            text: `${emoji} ${bold("#" + index)} ${fumo._id} - ${bold(url('URL', fumo.URL, 'Un fumo'))}`,
+                            text: `> ${bold("#" + index)} ${fumo._id} - ${bold(url('URL', fumo.URL, 'Un fumo'))}`,
                             thumbnail: fumo.URL
                         })
                     }
                 }
 
-                const embeds = fields.map((field) => new Utils.Embed({
-                    url: Client.url,
-                    description: fields.map((field) => field.text).join("\n"),
-                })
-                    .setColor(Colors.INVISIBLE)
-                    .setImage(field.thumbnail)) // actually creating multiple embeds with different image urls shows the same image so idk
+                const embeds = fields
+                    .map((field) => new Utils.Embed({
+                        url: Client.url,
+                        description: fields.map((field) => field.text).join("\n"),
+                    })
+                        .setColor(Colors.INVISIBLE)
+                        .setImage(field.thumbnail)) // actually creating multiple embeds with different image urls shows the same image so idk
 
                 return embeds
             }

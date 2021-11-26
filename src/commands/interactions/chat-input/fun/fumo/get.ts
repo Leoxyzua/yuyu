@@ -25,9 +25,7 @@ export class FumoGetCommand extends BaseSubCommand {
                 label: 'fumo',
                 description: 'La ID del fumo',
                 required: true,
-                value: (input: string) => {
-                    return Client.cache.get(input);
-                }
+                value: Client.cache.get.bind(Client)
             }]
         });
     }
