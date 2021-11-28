@@ -35,10 +35,7 @@ export class CreateMultipleEmojisCommand extends BaseSubCommand {
 
     onCancelRun(context: Interaction.InteractionContext, args: CommandArgsBefore) {
         if (args.emojis === false) {
-            return context.editOrRespond({
-                content: `No pude encontrar ningun emoji.`,
-                flags: MessageFlags.EPHEMERAL
-            })
+            return this.safeReply(context, `No pude encontrar ningun emoji.`, true)
         }
     }
 
@@ -59,6 +56,6 @@ export class CreateMultipleEmojisCommand extends BaseSubCommand {
             if (emoji) names.push(emoji.toString())
         }
 
-        return context.editOrRespond(`Cree correctamente **${names.length}** emoji(s)!\n\n${names.join(', ')}`)
+        return this.safeReply(context, `Cree correctamente **${names.length}** emoji(s)!\n\n${names.join(', ')}`)
     }
 }

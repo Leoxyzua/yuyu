@@ -21,13 +21,13 @@ export class FumoRandomCommand extends BaseSubCommand {
 
         const components = new Utils.Components({
             timeout: 1000 * 20,
-            onTimeout: async () => await context.editOrRespond({ embed, components: [] }),
+            onTimeout: async () => await context.editResponse({ embed, components: [] }),
         }).addButton({
             emoji: UpdateIcon,
             style: MessageComponentButtonStyles.SECONDARY,
             run: this.run.bind(this)
         })
 
-        return context.editOrRespond({ embed, components })
+        return this.safeReply(context, { embed, components })
     }
 }

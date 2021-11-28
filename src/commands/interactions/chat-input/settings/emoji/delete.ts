@@ -35,10 +35,7 @@ export class DeleteEmojiCommand extends BaseSubCommand {
 
     onCancelRun(context: Interaction.InteractionContext, args: CommandArgsBefore) {
         if (args.emojis === false) {
-            return context.editOrRespond({
-                content: `No pude encontrar ningun emoji.`,
-                flags: MessageFlags.EPHEMERAL
-            })
+            return this.safeReply(context, `No pude encontrar ningun emoji.`, true)
         }
     }
 
@@ -49,6 +46,6 @@ export class DeleteEmojiCommand extends BaseSubCommand {
             reason: `Moderador responsable: ${context.user.tag}`
         }).catch(() => undefined))
 
-        return context.editOrRespond(`Borré correctamente **${result.length}** emoji(s)!`)
+        return this.safeReply(context, `Borré correctamente **${result.length}** emoji(s)!`)
     }
 }

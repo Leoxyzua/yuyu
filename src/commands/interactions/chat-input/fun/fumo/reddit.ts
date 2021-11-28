@@ -45,9 +45,7 @@ export class FumoRedditCommand extends BaseSubCommand {
             limit: 100
         })
 
-        if (!data) return context.editOrRespond({
-            content: `${Error} No se encontraron posts.`
-        })
+        if (!data) return this.safeReply(context, `${Error} No se encontraron posts.`, true)
 
         const paginator = new Paginator(context, {
             content: (page) => `Post ${(bold(page + "/" + data.length))}`,

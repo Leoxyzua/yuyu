@@ -62,10 +62,11 @@ export default class BanCommands extends BaseCommand {
     }
 
     onCancelRun(context: Interaction.InteractionContext) {
-        return context.editOrRespond({
-            content: `${Warning} El usuario mencionado no es un miembro válido o yo/tu no pued(e/o) manejar el rol.`,
-            flags: MessageFlags.EPHEMERAL
-        })
+        return this.safeReply(
+            context,
+            `${Warning} El usuario mencionado no es un miembro válido o yo/tu no pued(e/o) manejar el rol.`,
+            true
+        )
     }
 
     async run(context: Interaction.InteractionContext, args: CommandArgs) {
@@ -84,6 +85,6 @@ export default class BanCommands extends BaseCommand {
             setTimeout(() => aor(args.role.id), args.time)
         }
 
-        return context.editOrRespond(text + '.') // owo
+        return this.safeReply(context, text + '.') // owo
     }
 }

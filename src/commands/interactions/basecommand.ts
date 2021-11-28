@@ -13,7 +13,7 @@ const { bold, codeblock } = Utils.Markup
 
 export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommand<ParsedArgsFinished> {
     safeReply(
-        context: Interaction.InteractionContext,
+        context: Interaction.InteractionContext | Utils.ComponentContext,
         content: InteractionEditOrRespond | string = {},
         ephemeral?: boolean
     ) {
@@ -105,10 +105,42 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
 
 export class BaseSubCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
     type = ApplicationCommandOptionTypes.SUB_COMMAND
+    safeReply(
+        context: Interaction.InteractionContext | Utils.ComponentContext,
+        content: InteractionEditOrRespond | string = {},
+        ephemeral?: boolean
+    ) {
+        const flags = ephemeral
+            ? MessageFlags.EPHEMERAL
+            : typeof content !== 'string' && content.flags
+                ? content.flags
+                : undefined
+
+        return context.editOrRespond({
+            ...typeof content === 'string' ? { content } : content,
+            flags
+        })
+    }
 }
 
 export class BaseSubCommandGroup<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
     type = ApplicationCommandOptionTypes.SUB_COMMAND_GROUP
+    safeReply(
+        context: Interaction.InteractionContext | Utils.ComponentContext,
+        content: InteractionEditOrRespond | string = {},
+        ephemeral?: boolean
+    ) {
+        const flags = ephemeral
+            ? MessageFlags.EPHEMERAL
+            : typeof content !== 'string' && content.flags
+                ? content.flags
+                : undefined
+
+        return context.editOrRespond({
+            ...typeof content === 'string' ? { content } : content,
+            flags
+        })
+    }
 }
 
 export interface ContextMenuMessageArgs {

@@ -35,13 +35,14 @@ export class FumoGetCommand extends BaseSubCommand {
     }
 
     onCancelRun(context: Interaction.InteractionContext) {
-        return context.editOrRespond({
-            content: `${Error} Fumo no encontrado, asegurate de haber ingresado una ID válida.`,
-            flags: Constants.MessageFlags.EPHEMERAL
-        })
+        return this.safeReply(
+            context,
+            `${Error} Fumo no encontrado, asegurate de haber ingresado una ID válida.`,
+            true
+        )
     }
 
     run(context: Interaction.InteractionContext, { fumo: { URL } }: CommandArgs) {
-        return context.editOrRespond(URL)
+        return this.safeReply(context, URL)
     }
 }

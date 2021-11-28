@@ -10,15 +10,10 @@ export default class RawContentCommand extends BaseContextMenuMessageCommand {
     async run(context: Interaction.InteractionContext, args: ContextMenuMessageArgs) {
         const { content } = args.message
 
-        if (!content) return context.editOrRespond({
-            content: 'El mensaje tiene que tener cotenido.',
-            flags: MessageFlags.EPHEMERAL
-        })
+        if (!content)
+            return this.safeReply(context, 'El mensaje tiene que tener cotenido.', true)
 
         const text = Utils.Markup.codeblock(content.replace(/```/gi, ''))
-        return context.editOrRespond({
-            content: text,
-            flags: MessageFlags.EPHEMERAL
-        })
+        return this.safeReply(context, text, true)
     }
 }

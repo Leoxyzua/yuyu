@@ -64,10 +64,12 @@ export class EmojiListCommand extends BaseSubCommand {
             }
         })
 
-        if (!search) return context.editOrRespond({
-            content: `No se encontraron emojis con el filtro **${args.filter}**`,
-            flags: MessageFlags.EPHEMERAL
-        })
+        if (!search) return this.safeReply(
+            context,
+            `No se encontraron emojis con el filtro **${args.filter}**`,
+            true
+        )
+
 
         const EMOJIS_PER_PAGE = 10
         const TOTAL_PAGES = Math.ceil(search.length / EMOJIS_PER_PAGE)

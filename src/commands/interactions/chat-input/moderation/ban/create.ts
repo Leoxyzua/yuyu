@@ -50,10 +50,7 @@ export class CreateBanCommand extends BaseSubCommand {
     }
 
     onCancelRun(context: Interaction.InteractionContext, args: CommandArgs) {
-        return context.editOrRespond({
-            content: `${args.target.mention} no puede ser baneado.`,
-            flags: MessageFlags.EPHEMERAL
-        })
+        return this.safeReply(context, `${args.target.mention} no puede ser baneado.`, true)
     }
 
     async run(context: Interaction.InteractionContext, args: CommandArgs) {
@@ -66,6 +63,6 @@ export class CreateBanCommand extends BaseSubCommand {
 
         const isBot = target instanceof User ? target.bot : target.user.bot
 
-        return context.editOrRespond(`${Succes} ${isBot ? 'Bot' : 'Miembro'} ${codestring(target.tag)} baneado con éxito por la razón ${bold(reason)}.`)
+        return this.safeReply(context, `${Succes} ${isBot ? 'Bot' : 'Miembro'} ${codestring(target.tag)} baneado con éxito por la razón ${bold(reason)}.`)
     }
 }

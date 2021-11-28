@@ -13,7 +13,7 @@ export default class SetupSettingsCommand extends BaseCommand {
     permissions = [Permissions.ADMINISTRATOR]
 
     async run(context: Interaction.InteractionContext) {
-        return context.editOrRespond({
+        return this.safeReply(context, {
             content: '.',
             components: this.baseComponents(undefined, context)
         })
@@ -59,7 +59,7 @@ export default class SetupSettingsCommand extends BaseCommand {
 
         this.addCancelButton(row)
 
-        return context.editOrRespond({
+        return this.safeReply(context, {
             content: 'Elije un rol.',
             components: row
         })
@@ -89,7 +89,7 @@ export default class SetupSettingsCommand extends BaseCommand {
 
         this.addCancelButton(row)
 
-        return context.editOrRespond({
+        return this.safeReply(context, {
             content: 'Elije un(os) emoji(s)',
             components: row
         })
@@ -108,7 +108,7 @@ export default class SetupSettingsCommand extends BaseCommand {
 
         const components = this.addCancelButton(this.createRow(context))
 
-        return context.editOrRespond({
+        return this.safeReply(context, {
             content: 'oka',
             components
         })

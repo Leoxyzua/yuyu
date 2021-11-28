@@ -55,10 +55,11 @@ export default class HelpCommand extends BaseCommand {
     }
 
     onCancelRun(context: Interaction.InteractionContext) {
-        return context.editOrRespond({
-            content: `${Warning} Comando no encontrado.`,
-            flags: MessageFlags.EPHEMERAL
-        })
+        return this.safeReply(
+            context,
+            `${Warning} Comando no encontrado.`,
+            true
+        )
     }
 
     async run(context: Interaction.InteractionContext, args: CommandArgs) {
@@ -87,6 +88,6 @@ export default class HelpCommand extends BaseCommand {
             }
         }
 
-        return context.editOrRespond({ embed, flags: MessageFlags.EPHEMERAL })
+        return this.safeReply(context, { embed }, true)
     }
 }

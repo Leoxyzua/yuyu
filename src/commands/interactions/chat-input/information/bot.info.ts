@@ -53,7 +53,7 @@ export default class BotInfoCommand extends BaseCommand {
         app.addField('Bot pública?', bol(application?.botPublic), true)
         app.addField('Código OAUTH2 requerido?', bol(application?.botRequireCodeGrant), true)
 
-        return context.editOrRespond({
+        return this.safeReply(context, {
             content: `Puedes conseguir los iconos que uso haciendo ${url('click aquí', `<${ServerLink}>`, 'Server de Iconos')}`,
             embeds: [general, app]
         })

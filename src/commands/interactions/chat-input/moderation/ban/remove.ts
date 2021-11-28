@@ -39,10 +39,7 @@ export class RemoveBanCommand extends BaseSubCommand {
     }
 
     onCancelRun(context: Interaction.InteractionContext) {
-        return context.editOrRespond({
-            content: `${Error} Ese no es un miembro válido.`,
-            flags: MessageFlags.EPHEMERAL
-        })
+        return this.safeReply(context, `${Error} Ese no es un miembro válido.`, true)
     }
 
     async run(context: Interaction.InteractionContext, args: CommandArgs) {
@@ -50,6 +47,6 @@ export class RemoveBanCommand extends BaseSubCommand {
             reason: `Moderador responsable: ${context.user.tag}`
         })
 
-        return context.editOrRespond(`${Succes} ${args.target.bot ? 'Bot' : 'Miembro'} ${codestring(args.target.tag)} desbaneado.`)
+        return this.safeReply(context, `${Succes} ${args.target.bot ? 'Bot' : 'Miembro'} ${codestring(args.target.tag)} desbaneado.`)
     }
 }

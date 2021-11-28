@@ -43,6 +43,9 @@ export default class UnarchiveAllThreadsCommand extends BaseCommand {
             }
         }
 
-        return context.editOrRespond(`${Succes} Des-archive correctamente los siguientes threads: ${unarchived.length ? unarchived.map((id) => `<#${id}>`).join(', ') : 'Ninguno'}. En ${((Date.now() - start) / 1000).toFixed(1)}s`)
+        return this.safeReply(
+            context,
+            `${Succes} Des-archive correctamente los siguientes threads: ${unarchived.length ? unarchived.map((id) => `<#${id}>`).join(', ') : 'Ninguno'}. En ${((Date.now() - start) / 1000).toFixed(1)}s`
+        )
     }
 }
