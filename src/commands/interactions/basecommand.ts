@@ -8,18 +8,24 @@ import {
 import { Member, User, Message, InteractionEditOrRespond } from "detritus-client/lib/structures"
 import { PermissionUnRaw, Servers, TestServers } from "../../utils/constants"
 import { Warning, Error } from "../../utils/icons"
-
 import { inspect } from 'util'
-
 const { bold, codeblock } = Utils.Markup
 
 export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommand<ParsedArgsFinished> {
-    safeReply(context: Interaction.InteractionContext, content: InteractionEditOrRespond | string) {
+    safeReply(
+        context: Interaction.InteractionContext,
+        content: InteractionEditOrRespond | string = {},
+        ephemeral?: boolean
+    ) {
+        const flags = ephemeral
+            ? MessageFlags.EPHEMERAL
+            : typeof content !== 'string' && content.flags
+                ? content.flags
+                : undefined
+
         return context.editOrRespond({
             ...typeof content === 'string' ? { content } : content,
-            allowedMentions: {
-                parse: []
-            }
+            flags
         })
     }
 
@@ -27,10 +33,11 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
         if (error.raw && error.response) console.error(`Error in the command ${this.name}`, inspect(error.raw, { depth: 7 }))
         else console.error(error)
 
-        return context.editOrRespond({
-            content: `${Error} Ocurrió un error al ejecutar este comando:\n${codeblock(error.toString())}`,
-            flags: MessageFlags.EPHEMERAL,
-        })
+        return this.safeReply(
+            context,
+            `${Error} Ocurrió un error al ejecutar este comando:\n${codeblock(error.toString())}`,
+            true
+        )
     }
 
     onError(context: Interaction.InteractionContext, _args: unknown, error: any) {
@@ -54,10 +61,11 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
 
             const type = ratelimit.type.toString()
 
-            return context.editOrRespond({
-                content: texts[type]((remaining / 1000).toFixed(1)) ?? 'Oops',
-                flags: type === 'user' ? MessageFlags.EPHEMERAL : undefined
-            })
+            return this.safeReply(
+                context,
+                texts[type]((remaining / 1000).toFixed(1)) ?? 'Oops',
+                type === 'user'
+            )
         }
     }
 
@@ -68,10 +76,11 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
             permissions.push(PermissionUnRaw[key])
         }
 
-        return context.editOrRespond({
-            content: `${Error} Para ejecutar el comando ${this.name} necesitas el/los siguiente(s) permiso(s):\n${Utils.Markup.codeblock(permissions.join(', '))}`,
-            flags: MessageFlags.EPHEMERAL,
-        })
+        return this.safeReply(
+            context,
+            `${Error} Para ejecutar el comando ${this.name} necesitas el/los siguiente(s) permiso(s):\n${Utils.Markup.codeblock(permissions.join(', '))}`,
+            true
+        )
     }
 
     constructor(data: Interaction.InteractionCommandOptions = {}) {
