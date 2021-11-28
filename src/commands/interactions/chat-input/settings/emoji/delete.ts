@@ -1,4 +1,5 @@
 import { Constants, Interaction, Structures, Utils } from "detritus-client"
+import { CommandValues } from "../../../../../utils/parameters"
 import { BaseSubCommand } from "../../../basecommand"
 
 export const COMMAND_NAME = 'delete'
@@ -22,26 +23,7 @@ export class DeleteEmojiCommand extends BaseSubCommand {
                 label: 'emojis',
                 description: 'Los/el nombre(s) de el/los emoji(s)',
                 required: true,
-                value: (value: string, context: Interaction.InteractionContext) => {
-                    const names: string[] = []
-                    const { matches } = Utils.regex('EMOJI', value)
-
-                    if (matches.length) {
-                        for (const { name } of matches) {
-                            if (name) names.push(name)
-                        }
-                    } else {
-                        const emojis = value.split(/ +/)
-
-                        for (const name of emojis) {
-                            names.push(name)
-                        }
-                    }
-
-                    const emojis = context.guild?.emojis.filter((emoji) => names.includes(emoji.name) || names.includes(emoji.id!))
-
-                    return emojis?.length ? emojis : false
-                }
+                value: CommandValues.parseEmojis,
             }]
         })
     }

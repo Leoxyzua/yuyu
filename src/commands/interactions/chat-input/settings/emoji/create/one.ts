@@ -78,9 +78,9 @@ export class CreateOneEmojiCommand extends BaseSubCommand {
 
         const image = await fetch(args.url)
             .then((res) => res.arrayBuffer())
-            .catch(() => undefined) as Buffer
+            .catch(() => []) as Buffer
 
-        if (!image || !image.length) return context.editOrRespond(`URL inválida.`)
+        if (!image.length) return context.editOrRespond(`URL inválida.`)
 
         const emoji = await context.guild?.createEmoji({
             name: parseEmojiName(args.name),

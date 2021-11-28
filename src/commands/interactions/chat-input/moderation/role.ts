@@ -1,7 +1,7 @@
 import { Constants, Interaction, Structures, Utils } from "detritus-client"
+import { Autocomplete, CommandValues } from "../../../../utils/parameters"
 import { Succes, Warning } from "../../../../utils/icons"
 import { BaseCommand } from "../../basecommand"
-import ms from 'ms'
 
 const { codestring } = Utils.Markup
 
@@ -42,34 +42,8 @@ export default class BanCommands extends BaseCommand {
                 {
                     name: 'time',
                     description: 'Cuanto tiempo durará la acción',
-                    value: (value) => {
-                        const DAY_IN_MS = 172800000
-
-                        if (isNaN(value) || value > DAY_IN_MS) return
-
-                        return parseInt(value)
-                    },
-                    onAutoComplete: (context) => {
-                        const template = [
-                            's:45',
-                            'h:2',
-                            'd:1'
-                        ]
-
-                        let values = []
-                        const strings = template.map((temp) => temp.split(':')[0])
-
-                        if (context.value && !isNaN(parseInt(context.value))) {
-                            values = strings.map((str) => context.value + str)
-                        } else values = template.map((temp) => {
-                            const key = temp.split(':')
-                            return key[1] + key[0]
-                        })
-
-                        const choices = values.map((val) => ({ name: val, value: ms(val).toString() }))
-
-                        return context.respond({ choices })
-                    }
+                    onAutoComplete: Autocomplete.parseDuration,
+                    value: CommandValues.parseDuration
                 }
             ],
             metadata: { category: 'mod' }
