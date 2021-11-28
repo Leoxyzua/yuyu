@@ -22,7 +22,6 @@ export class FumoListCommand extends BaseSubCommand {
         const paginator = new Paginator(context, {
             baseArray: list,
             objectsPerPage: 4,
-            // pageObject: 0, TODO: fix paginator not showing first 5 items
             content: (page) => {
                 const pages = Math.ceil(list.length / 4)
                 return `Pagina ${bold(page + "/" + pages)}`
@@ -32,7 +31,7 @@ export class FumoListCommand extends BaseSubCommand {
 
                 if (fumos) {
                     for (const fumo of fumos) {
-                        const index = list.indexOf(fumo) - 4
+                        const index = list.indexOf(fumo) + 1
 
                         fields.push({
                             text: `> ${bold("#" + index)} ${fumo._id} - ${bold(url('URL', fumo.URL, 'Un fumo'))}`,

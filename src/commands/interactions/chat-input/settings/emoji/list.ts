@@ -70,16 +70,10 @@ export class EmojiListCommand extends BaseSubCommand {
             true
         )
 
-
-        const EMOJIS_PER_PAGE = 10
-        const TOTAL_PAGES = Math.ceil(search.length / EMOJIS_PER_PAGE)
-
         const paginator = new Paginator(context, {
             baseArray: search,
-            objectsPerPage: EMOJIS_PER_PAGE,
-            pageObject: 0,
-            lastPage: TOTAL_PAGES,
-            content: (page) => `Pagina **${page + "/" + TOTAL_PAGES}**`,
+            objectsPerPage: 10,
+            content: (page) => `Pagina **${page + "/" + Math.ceil(search.length / 10)}**`,
             onPage: (page, emojis?: typeof search) => {
                 const embed = new Utils.Embed()
                     .setColor(Colors.INVISIBLE)

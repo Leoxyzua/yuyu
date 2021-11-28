@@ -46,7 +46,7 @@ export default class Paginator implements Options {
     timeout?= 1000 * 60
     page = 1
     lastPage?: number
-    pageObject = 5
+    pageObject = 0
 
     constructor(context: Interaction.InteractionContext, options: Options) {
         this.context = context
@@ -67,7 +67,10 @@ export default class Paginator implements Options {
         if (options.pageObject !== undefined)
             this.pageObject = options.pageObject
 
-        this.lastPage = options.lastPage ?? this.baseArray?.length
+        this.lastPage = options.lastPage ??
+            (this.objectsPerPage && this.baseArray?.length)
+            ? Math.ceil(this.baseArray?.length! / this.objectsPerPage!)
+            : this.baseArray?.length
 
         console.log(`Paginator started by ${context.user.tag} in channel ${context.channel?.name}`)
     }
@@ -127,7 +130,9 @@ export default class Paginator implements Options {
 
     setPage(page: number, pageObject?: number) {
         this.page = page
-        if (this.objectsPerPage && pageObject) this.pageObject = pageObject
+        if (this.objectsPerPage && typeof pageObject === 'number')
+            this.pageObject = pageObject
+
     }
 
     async createMessage() {
@@ -153,8 +158,7 @@ export default class Paginator implements Options {
                 break
 
             case EmojiNames.CANCEL:
-                await this.cancel()
-                return
+                return this.cancel()
 
             case EmojiNames.NEXT:
                 this.setPage(this.page + 1, this.pageObject + this.objectsPerPage!)
