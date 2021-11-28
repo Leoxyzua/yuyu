@@ -1,4 +1,5 @@
-const { SUCCES_ICON,
+const {
+    SUCCES_ICON,
     ERROR_ICON,
     WARNING_ICON,
     REPLY_MIDDLE_ICON,

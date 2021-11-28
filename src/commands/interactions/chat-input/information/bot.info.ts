@@ -1,4 +1,5 @@
-import { Constants, Interaction, Utils } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import { Package } from "detritus-client/lib/constants"
 import { BaseCommand } from "../../basecommand"
 import { ServerLink } from "../../../../utils/icons"
 import { Colors } from "../../../../utils/constants"
@@ -35,7 +36,7 @@ export default class BotInfoCommand extends BaseCommand {
         general
             .addField('Comandos', `${interactionCommandClient?.commands.size}, escribe ${codestring('/help')} para la lista.`, true)
             .addField('Shards', `${shardCount}, en un total de ${guilds.size} servidores`, true)
-            .addField('Librería', `Detritus v${Constants.Package.VERSION}`, true)
+            .addField('Librería', `Detritus v${Package.VERSION}`, true)
             .addField('Proceso', `TypeScript v${pkgjson.devDependencies.typescript.slice(1)}\nNodeJS ${process.version}`, true)
             .addField('Usuarios en cache', users.size.toString(), true)
             .addField('Presencias en cache', presences.size.toString(), true)

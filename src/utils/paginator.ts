@@ -1,4 +1,9 @@
-import { Constants, Interaction, Utils } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import {
+    MessageFlags,
+    InteractionCallbackTypes,
+    MessageComponentButtonStyles
+} from "detritus-client/lib/constants"
 
 export type OnPage = (page: number, pageObject?: any[]) => Promise<Utils.Embed | Utils.Embed[]> | Utils.Embed | Utils.Embed[]
 export type Content = (page: number, pageObject?: any[]) => string
@@ -94,7 +99,7 @@ export default class Paginator implements Options {
 
             row.createButton({
                 customId: EmojiNames.CANCEL,
-                style: Constants.MessageComponentButtonStyles.DANGER,
+                style: MessageComponentButtonStyles.DANGER,
                 ...FormatEmoji(Emojis.CANCEL)
             })
 
@@ -139,7 +144,7 @@ export default class Paginator implements Options {
     async updatePage(context: Utils.ComponentContext) {
         if (context.userId !== this.context.userId) return context.createMessage({
             content: 'No puedes usar esto.',
-            flags: Constants.MessageFlags.EPHEMERAL
+            flags: MessageFlags.EPHEMERAL
         })
 
         switch (context.customId) {
@@ -156,7 +161,7 @@ export default class Paginator implements Options {
                 break
         }
 
-        await context.respond(Constants.InteractionCallbackTypes.DEFERRED_UPDATE_MESSAGE)
+        await context.respond(InteractionCallbackTypes.DEFERRED_UPDATE_MESSAGE)
             .catch(() => console.info(`Unable to respond interaction in paginator of ${context.user.tag} in #${context.channel?.name}`))
         await this.createMessage()
     }

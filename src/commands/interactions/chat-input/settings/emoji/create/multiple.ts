@@ -1,23 +1,17 @@
-import { Constants, Interaction, Utils, Endpoints } from "detritus-client"
+import { Interaction, Utils, Endpoints } from "detritus-client"
+import { InteractionCallbackTypes, MessageFlags } from "detritus-client/lib/constants"
 import { BaseSubCommand } from "../../../../basecommand"
 import fetch from 'node-fetch'
+import { CommandValues } from "../../../../../../utils/parameters"
 
 export const COMMAND_NAME = 'multiple'
 
-// discord emoji id regex
-
-
-interface EmojiBase {
-    url: string
-    name: string
-}
-
 export interface CommandArgsBefore {
-    emojis: EmojiBase[] | false
+    emojis: CommandValues.EmojiBase[] | false
 }
 
 export interface CommandArgs {
-    emojis: EmojiBase[]
+    emojis: CommandValues.EmojiBase[]
 }
 
 export class CreateMultipleEmojisCommand extends BaseSubCommand {
@@ -30,23 +24,7 @@ export class CreateMultipleEmojisCommand extends BaseSubCommand {
                 name: 'emojis',
                 description: 'Los emojis a añadir',
                 required: true,
-                value: (value: string) => {
-                    const emojis: EmojiBase[] = []
-                    const { matches } = Utils.regex('EMOJI', value)
-
-                    if (matches.length) {
-                        for (const { name, id, animated } of matches) {
-                            if (name && id) {
-                                const format = (animated) ? 'gif' : 'png'
-                                const url = Endpoints.CDN.URL + Endpoints.CDN.EMOJI(id, format) + `?size=${animated ? 80 : 160}`
-
-                                emojis.push({ name, url })
-                            }
-                        }
-                    }
-
-                    return emojis.length ? emojis : false
-                }
+                value: CommandValues.parseEmojisToAdd
             }]
         })
     }
@@ -59,13 +37,13 @@ export class CreateMultipleEmojisCommand extends BaseSubCommand {
         if (args.emojis === false) {
             return context.editOrRespond({
                 content: `No pude encontrar ningun emoji.`,
-                flags: Constants.MessageFlags.EPHEMERAL
+                flags: MessageFlags.EPHEMERAL
             })
         }
     }
 
     async run(context: Interaction.InteractionContext, args: CommandArgs) {
-        await context.respond(Constants.InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
+        await context.respond(InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
 
         const names = []
 

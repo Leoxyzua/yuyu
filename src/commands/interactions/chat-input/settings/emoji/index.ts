@@ -1,4 +1,4 @@
-import { Constants } from "detritus-client"
+import { Permissions } from "detritus-client/lib/constants"
 import { BaseCommand } from "../../../basecommand"
 import { CreateEmojiCommands } from "./create"
 import { DeleteEmojiCommand } from "./delete"
@@ -25,5 +25,5 @@ export default class EmojiCommands extends BaseCommand {
         })
     }
 
-    permissions = [Constants.Permissions.MANAGE_EMOJIS]
+    permissions = [Permissions.MANAGE_EMOJIS]
 }

@@ -1,4 +1,4 @@
-import { Constants } from "detritus-client"
+import { Permissions } from "detritus-client/lib/constants"
 import { BaseCommand } from "../../../basecommand"
 
 import { CreateBanCommand } from './create'
@@ -21,5 +21,5 @@ export default class BanCommands extends BaseCommand {
         })
     }
 
-    permissions = [Constants.Permissions.BAN_MEMBERS]
+    permissions = [Permissions.BAN_MEMBERS]
 }

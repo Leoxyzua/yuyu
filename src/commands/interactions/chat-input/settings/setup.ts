@@ -1,4 +1,6 @@
-import { Constants, Interaction, Structures, Utils } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import { Permissions, InteractionCallbackTypes, MessageComponentButtonStyles } from "detritus-client/lib/constants"
+import { Role, Emoji } from "detritus-client/lib/structures"
 import { BaseCommand } from "../../basecommand"
 import { Error } from "../../../../utils/icons"
 
@@ -8,7 +10,7 @@ export default class SetupSettingsCommand extends BaseCommand {
     name = COMMAND_NAME
     description = "Configuración del server"
 
-    permissions = [Constants.Permissions.ADMINISTRATOR]
+    permissions = [Permissions.ADMINISTRATOR]
 
     async run(context: Interaction.InteractionContext) {
         return context.editOrRespond({
@@ -18,7 +20,7 @@ export default class SetupSettingsCommand extends BaseCommand {
     }
 
     async listenButtons(context: Interaction.InteractionContext, componentContext: Utils.ComponentContext) {
-        await componentContext.respond(Constants.InteractionCallbackTypes.DEFERRED_UPDATE_MESSAGE)
+        await componentContext.respond(InteractionCallbackTypes.DEFERRED_UPDATE_MESSAGE)
 
         switch (componentContext.customId) {
             case 'cancel':
@@ -64,7 +66,7 @@ export default class SetupSettingsCommand extends BaseCommand {
     }
 
 
-    async chooseEmojisToLock(context: Interaction.InteractionContext, role: Structures.Role) {
+    async chooseEmojisToLock(context: Interaction.InteractionContext, role: Role) {
         const emojis = await context.guild!.fetchEmojis()
         const row = this.createRow(context)
 
@@ -95,8 +97,8 @@ export default class SetupSettingsCommand extends BaseCommand {
 
     async lockEmoji(
         context: Interaction.InteractionContext,
-        role: Structures.Role,
-        emojis: Structures.Emoji[]
+        role: Role,
+        emojis: Emoji[]
     ) {
         for (const emoji of emojis) {
             await emoji.edit({
@@ -116,7 +118,7 @@ export default class SetupSettingsCommand extends BaseCommand {
         return row.addButton({
             label: 'Cancelar',
             customId: 'cancel',
-            style: Constants.MessageComponentButtonStyles.DANGER,
+            style: MessageComponentButtonStyles.DANGER,
             emoji: Error
         })
     }

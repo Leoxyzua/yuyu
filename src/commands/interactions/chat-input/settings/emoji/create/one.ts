@@ -1,4 +1,5 @@
-import { Interaction, Utils, Constants } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import { InteractionCallbackTypes, MessageFlags } from "detritus-client/lib/constants"
 import { Endpoints } from "detritus-client-rest"
 import { BaseSubCommand } from "../../../../basecommand"
 import { parseEmojiName } from ".."
@@ -53,7 +54,7 @@ export class CreateOneEmojiCommand extends BaseSubCommand {
 
         return context.editOrRespond({
             content: `Uso mal del comando, asegurate haber ingresado un emoji o URL valido (Error: ${error})`,
-            flags: Constants.MessageFlags.EPHEMERAL
+            flags: MessageFlags.EPHEMERAL
         })
     }
 
@@ -62,7 +63,7 @@ export class CreateOneEmojiCommand extends BaseSubCommand {
     }
 
     async run(context: Interaction.InteractionContext, args: CommandArgs) {
-        await context.respond(Constants.InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
+        await context.respond(InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
 
         if (args.type === 'emoji') {
             const { matches } = Utils.regex('EMOJI', args.url)

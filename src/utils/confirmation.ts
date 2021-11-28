@@ -1,4 +1,10 @@
-import { Utils, Constants, Structures, Interaction } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import {
+    MessageFlags,
+    InteractionCallbackTypes,
+    MessageComponentButtonStyles
+} from "detritus-client/lib/constants"
+import { MessageComponentActionRow, MessageComponentSelectMenu } from "detritus-client/lib/structures"
 import { BaseCollection } from "detritus-utils"
 
 export type OnCallback = (context: Utils.ComponentContext) => Promise<any>
@@ -12,9 +18,9 @@ export interface ConfirmationOptions {
 }
 
 
-export function disableButtons(row: BaseCollection<number, Structures.MessageComponentActionRow>): Utils.ComponentActionRow {
+export function disableButtons(row: BaseCollection<number, MessageComponentActionRow>): Utils.ComponentActionRow {
     const components = row.first()?.components.map((button) => {
-        if (!(button instanceof Structures.MessageComponentSelectMenu)) {
+        if (!(button instanceof MessageComponentSelectMenu)) {
             button.disabled = true
         }
 
@@ -52,12 +58,12 @@ export class Confirmation {
     start() {
         [{
             label: 'Yes',
-            style: Constants.MessageComponentButtonStyles.SUCCESS,
+            style: MessageComponentButtonStyles.SUCCESS,
             run: (context: Utils.ComponentContext) => {
                 if (context.user.id !== this.context.user.id)
-                    return context.respond(Constants.InteractionCallbackTypes.CHANNEL_MESSAGE_WITH_SOURCE, {
+                    return context.respond(InteractionCallbackTypes.CHANNEL_MESSAGE_WITH_SOURCE, {
                         content: 'Este botón no es para ti.',
-                        flags: Constants.MessageFlags.EPHEMERAL,
+                        flags: MessageFlags.EPHEMERAL,
                     })
 
                 return this.onConfirm(context)
@@ -66,12 +72,12 @@ export class Confirmation {
         },
         {
             label: 'No',
-            style: Constants.MessageComponentButtonStyles.DANGER,
+            style: MessageComponentButtonStyles.DANGER,
             run: (context: Utils.ComponentContext) => {
                 if (context.user.id !== this.context.user.id)
-                    return context.respond(Constants.InteractionCallbackTypes.CHANNEL_MESSAGE_WITH_SOURCE, {
+                    return context.respond(InteractionCallbackTypes.CHANNEL_MESSAGE_WITH_SOURCE, {
                         content: 'Este botón no es para ti.',
-                        flags: Constants.MessageFlags.EPHEMERAL,
+                        flags: MessageFlags.EPHEMERAL,
                     })
 
                 return this.onCancel(context)

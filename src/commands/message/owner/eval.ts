@@ -1,4 +1,5 @@
-import { Command, CommandClient, Utils, Constants } from 'detritus-client'
+import { Command, CommandClient, Utils } from 'detritus-client'
+import { DiscordRegexNames } from 'detritus-client/lib/constants'
 import { exec } from 'child_process'
 import { inspect, promisify } from 'util'
 
@@ -49,7 +50,7 @@ export default class EvalCommand extends BaseCommand {
     }
 
     async run(context: Command.Context, { code, exec, async, depth, nodepth }: CommandArgs) {
-        const { matches } = Utils.regex(Constants.DiscordRegexNames.TEXT_CODEBLOCK, code)
+        const { matches } = Utils.regex(DiscordRegexNames.TEXT_CODEBLOCK, code)
 
         if (matches.length && matches[0].text) code = matches[0].text
 

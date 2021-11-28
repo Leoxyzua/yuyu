@@ -1,11 +1,11 @@
 import {
     CommandClient,
-    Constants,
     InteractionCommandClient,
     Interaction,
     Utils,
     Command
 } from 'detritus-client'
+import { IS_TS_NODE } from 'detritus-client/lib/constants'
 import path from 'path'
 
 // support for esm, just modified
@@ -43,7 +43,7 @@ CommandClient.prototype.addMultipleIn = async function (
     }
 
     for (const file of files) {
-        if (!file.endsWith((Constants.IS_TS_NODE) ? '.ts' : '.js')) continue
+        if (!file.endsWith((IS_TS_NODE) ? '.ts' : '.js')) continue
 
         const filepath = path.resolve(directory, file)
         try {
@@ -97,7 +97,7 @@ InteractionCommandClient.prototype.addMultipleIn = async function (
     }
 
     for (const file of files) {
-        if (!file.endsWith((Constants.IS_TS_NODE) ? '.ts' : '.js')) continue
+        if (!file.endsWith((IS_TS_NODE) ? '.ts' : '.js')) continue
 
         const filepath = path.resolve(directory, file)
         try {

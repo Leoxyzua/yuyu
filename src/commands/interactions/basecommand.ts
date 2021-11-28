@@ -1,4 +1,11 @@
-import { Interaction, Constants, Utils, Structures } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import {
+    MessageFlags,
+    InteractionCallbackTypes,
+    ApplicationCommandOptionTypes,
+    ApplicationCommandTypes
+} from "detritus-client/lib/constants"
+import { Member, User, Message } from "detritus-client/lib/structures"
 import { PermissionUnRaw, Servers, TestServers } from "../../utils/constants"
 import { Warning, Error } from "../../utils/icons"
 
@@ -13,7 +20,7 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
 
         return context.editOrRespond({
             content: `${Error} Ocurrió un error al ejecutar este comando:\n${codeblock(error.toString())}`,
-            flags: Constants.MessageFlags.EPHEMERAL,
+            flags: MessageFlags.EPHEMERAL,
         })
     }
 
@@ -24,8 +31,8 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
     onLoadingTrigger(context: Interaction.InteractionContext) {
         if (context.responded) return
 
-        return context.respond(Constants.InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE, {
-            flags: this.triggerLoadingAsEphemeral ? Constants.MessageFlags.EPHEMERAL : undefined
+        return context.respond(InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE, {
+            flags: this.triggerLoadingAsEphemeral ? MessageFlags.EPHEMERAL : undefined
         })
     }
 
@@ -40,7 +47,7 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
 
             return context.editOrRespond({
                 content: texts[type]((remaining / 1000).toFixed(1)) ?? 'Oops',
-                flags: type === 'user' ? Constants.MessageFlags.EPHEMERAL : undefined
+                flags: type === 'user' ? MessageFlags.EPHEMERAL : undefined
             })
         }
     }
@@ -54,7 +61,7 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
 
         return context.editOrRespond({
             content: `${Error} Para ejecutar el comando ${this.name} necesitas el/los siguiente(s) permiso(s):\n${Utils.Markup.codeblock(permissions.join(', '))}`,
-            flags: Constants.MessageFlags.EPHEMERAL,
+            flags: MessageFlags.EPHEMERAL,
         })
     }
 
@@ -79,30 +86,30 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
 }
 
 export class BaseSubCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
-    type = Constants.ApplicationCommandOptionTypes.SUB_COMMAND
+    type = ApplicationCommandOptionTypes.SUB_COMMAND
 }
 
 export class BaseSubCommandGroup<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
-    type = Constants.ApplicationCommandOptionTypes.SUB_COMMAND_GROUP
+    type = ApplicationCommandOptionTypes.SUB_COMMAND_GROUP
 }
 
 export interface ContextMenuMessageArgs {
-    message: Structures.Message
+    message: Message
 }
 
 export class BaseContextMenuMessageCommand extends BaseCommand<ContextMenuMessageArgs> {
-    type = Constants.ApplicationCommandTypes.MESSAGE
+    type = ApplicationCommandTypes.MESSAGE
     triggerLoadingAfter = 1000
     triggerLoadingAsEphemeral = true
 }
 
 export interface ContextMenuUserArgs {
-    member?: Structures.Member
-    user: Structures.User
+    member?: Member
+    user: User
 }
 
 export class BaseContextMenuUserCommand extends BaseCommand<ContextMenuUserArgs> {
-    type = Constants.ApplicationCommandTypes.USER
+    type = ApplicationCommandTypes.USER
     triggerLoadingAfter = 1000
     triggerLoadingAsEphemeral = true
 }

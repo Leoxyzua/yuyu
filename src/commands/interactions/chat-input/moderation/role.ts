@@ -1,4 +1,6 @@
-import { Constants, Interaction, Structures, Utils } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import { MessageFlags, ApplicationCommandOptionTypes, Permissions } from "detritus-client/lib/constants"
+import { Member, User, Role } from "detritus-client/lib/structures"
 import { Autocomplete, CommandValues } from "../../../../utils/parameters"
 import { Succes, Warning } from "../../../../utils/icons"
 import { BaseCommand } from "../../basecommand"
@@ -8,14 +10,14 @@ const { codestring } = Utils.Markup
 export const COMMAND_NAME = "role"
 
 export interface CommandArgsBefore {
-    member: Structures.Member | Structures.User
-    role: Structures.Role
+    member: Member | User
+    role: Role
     time: number | undefined
 }
 
 export interface CommandArgs {
-    member: Structures.Member
-    role: Structures.Role
+    member: Member
+    role: Role
     time: number | undefined
 }
 
@@ -28,13 +30,13 @@ export default class BanCommands extends BaseCommand {
         super({
             options: [
                 {
-                    type: Constants.ApplicationCommandOptionTypes.USER,
+                    type: ApplicationCommandOptionTypes.USER,
                     name: 'member',
                     description: 'El miembro',
                     required: true
                 },
                 {
-                    type: Constants.ApplicationCommandOptionTypes.ROLE,
+                    type: ApplicationCommandOptionTypes.ROLE,
                     name: 'role',
                     description: 'El rol',
                     required: true
@@ -50,10 +52,10 @@ export default class BanCommands extends BaseCommand {
         })
     }
 
-    permissions = [Constants.Permissions.MANAGE_ROLES]
+    permissions = [Permissions.MANAGE_ROLES]
 
     onBeforeRun(context: Interaction.InteractionContext, args: CommandArgsBefore) {
-        return (args.member instanceof Structures.Member)
+        return (args.member instanceof Member)
             && (args.role.id !== context.guildId)
             && (context.me?.canEditRole(args.role)!)
             && (context.member?.highestRole!.position! > args.role.position)
@@ -62,7 +64,7 @@ export default class BanCommands extends BaseCommand {
     onCancelRun(context: Interaction.InteractionContext) {
         return context.editOrRespond({
             content: `${Warning} El usuario mencionado no es un miembro válido o yo/tu no pued(e/o) manejar el rol.`,
-            flags: Constants.MessageFlags.EPHEMERAL
+            flags: MessageFlags.EPHEMERAL
         })
     }
 

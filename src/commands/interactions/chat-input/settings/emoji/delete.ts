@@ -1,4 +1,5 @@
-import { Constants, Interaction, Structures, Utils } from "detritus-client"
+import { Interaction, Structures, Utils } from "detritus-client"
+import { InteractionCallbackTypes, MessageFlags } from "detritus-client/lib/constants"
 import { CommandValues } from "../../../../../utils/parameters"
 import { BaseSubCommand } from "../../../basecommand"
 
@@ -23,7 +24,7 @@ export class DeleteEmojiCommand extends BaseSubCommand {
                 label: 'emojis',
                 description: 'Los/el nombre(s) de el/los emoji(s)',
                 required: true,
-                value: CommandValues.parseEmojis,
+                value: CommandValues.parseEmojisToDelete,
             }]
         })
     }
@@ -36,13 +37,13 @@ export class DeleteEmojiCommand extends BaseSubCommand {
         if (args.emojis === false) {
             return context.editOrRespond({
                 content: `No pude encontrar ningun emoji.`,
-                flags: Constants.MessageFlags.EPHEMERAL
+                flags: MessageFlags.EPHEMERAL
             })
         }
     }
 
     async run(context: Interaction.InteractionContext, args: CommandArgs) {
-        await context.respond(Constants.InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
+        await context.respond(InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
 
         const result = args.emojis.map((emoji) => emoji.delete({
             reason: `Moderador responsable: ${context.user.tag}`

@@ -1,10 +1,10 @@
 import {
     CommandClient,
-    Constants,
     InteractionCommandClient,
     ShardClient
 } from 'detritus-client'
-import { GatewayIntents } from 'detritus-client-socket/lib/constants.js'
+import { ActivityTypes } from 'detritus-client/lib/constants'
+import { GatewayIntents } from 'detritus-client-socket/lib/constants'
 import { inspect } from 'util'
 
 import './database'
@@ -29,7 +29,7 @@ const client = new ShardClient(BOT_TOKEN!, {
             GatewayIntents.GUILD_MESSAGES
         ],
         presence: {
-            activities: ['cat', 'dog'].map((animal) => ({ name: `the ${animal}`, type: Constants.ActivityTypes.LISTENING }))
+            activities: ['cat', 'dog'].map((animal) => ({ name: `the ${animal}`, type: ActivityTypes.LISTENING }))
         }
     },
     imageFormat: 'png',

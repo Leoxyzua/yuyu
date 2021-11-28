@@ -1,11 +1,13 @@
-import { Structures, Constants, Interaction, Utils } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import { MessageFlags, ApplicationCommandOptionTypes } from "detritus-client/lib/constants"
+import { Member, User } from "detritus-client/lib/structures"
 import { BaseSubCommand } from "../../../basecommand"
 import { Succes } from "../../../../../utils/icons"
 
 const { codestring, bold } = Utils.Markup
 
 export interface CommandArgs {
-    target: Structures.Member | Structures.User
+    target: Member | User
     reason: string // not undefined, it has a default value
     delete_days?: string
 }
@@ -21,7 +23,7 @@ export class CreateBanCommand extends BaseSubCommand {
             options: [
                 {
                     name: 'target',
-                    type: Constants.ApplicationCommandOptionTypes.USER,
+                    type: ApplicationCommandOptionTypes.USER,
                     description: 'El miembro a banear',
                     required: true
                 },
@@ -42,7 +44,7 @@ export class CreateBanCommand extends BaseSubCommand {
     onBeforeRun(context: Interaction.InteractionContext, { target }: CommandArgs) {
         if (!context.guild || !context.me) return false
         if (!context.guild.members.has(target.id)) return true
-        if (target instanceof Structures.Member && target.highestRole?.position! > context.member?.highestRole?.position!) return false
+        if (target instanceof Member && target.highestRole?.position! > context.member?.highestRole?.position!) return false
 
         return context.me.canEdit(target as any) && (context.me.id !== target.id) && (target.id !== context.user.id)
     }
@@ -50,7 +52,7 @@ export class CreateBanCommand extends BaseSubCommand {
     onCancelRun(context: Interaction.InteractionContext, args: CommandArgs) {
         return context.editOrRespond({
             content: `${args.target.mention} no puede ser baneado.`,
-            flags: Constants.MessageFlags.EPHEMERAL
+            flags: MessageFlags.EPHEMERAL
         })
     }
 
@@ -62,7 +64,7 @@ export class CreateBanCommand extends BaseSubCommand {
             deleteMessageDays: delete_days,
         })
 
-        const isBot = target instanceof Structures.User ? target.bot : target.user.bot
+        const isBot = target instanceof User ? target.bot : target.user.bot
 
         return context.editOrRespond(`${Succes} ${isBot ? 'Bot' : 'Miembro'} ${codestring(target.tag)} baneado con éxito por la razón ${bold(reason)}.`)
     }

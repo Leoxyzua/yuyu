@@ -1,4 +1,5 @@
-import { Constants, Interaction, Utils } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import { MessageFlags } from "detritus-client/lib/constants"
 import { Colors } from "../../../../utils/constants"
 import { Warning } from "../../../../utils/icons"
 import { parseCategory, parseStrings, parseSubCommands } from "../../../../utils/strings"
@@ -56,7 +57,7 @@ export default class HelpCommand extends BaseCommand {
     onCancelRun(context: Interaction.InteractionContext) {
         return context.editOrRespond({
             content: `${Warning} Comando no encontrado.`,
-            flags: Constants.MessageFlags.EPHEMERAL
+            flags: MessageFlags.EPHEMERAL
         })
     }
 
@@ -86,6 +87,6 @@ export default class HelpCommand extends BaseCommand {
             }
         }
 
-        return context.editOrRespond({ embed, flags: Constants.MessageFlags.EPHEMERAL })
+        return context.editOrRespond({ embed, flags: MessageFlags.EPHEMERAL })
     }
 }

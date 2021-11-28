@@ -1,4 +1,5 @@
-import { Constants, Interaction, Utils } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import { InteractionCallbackTypes, MessageFlags } from "detritus-client/lib/constants"
 import { BaseSubCommand } from "../../../basecommand"
 import Paginator from "../../../../../utils/paginator"
 import { Colors } from "../../../../../utils/constants"
@@ -38,7 +39,7 @@ export class EmojiListCommand extends BaseSubCommand {
     }
 
     async run(context: Interaction.InteractionContext, args: CommandArgs) {
-        await context.respond(Constants.InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
+        await context.respond(InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
 
         const emojis = context.guild!.emojis.length
             ? context.guild!.emojis
@@ -65,7 +66,7 @@ export class EmojiListCommand extends BaseSubCommand {
 
         if (!search) return context.editOrRespond({
             content: `No se encontraron emojis con el filtro **${args.filter}**`,
-            flags: Constants.MessageFlags.EPHEMERAL
+            flags: MessageFlags.EPHEMERAL
         })
 
         const EMOJIS_PER_PAGE = 10

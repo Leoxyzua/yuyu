@@ -1,4 +1,6 @@
-import { Structures, Interaction, Utils, Constants } from "detritus-client"
+import { Interaction, Utils } from "detritus-client"
+import { MessageFlags } from "detritus-client/lib/constants"
+import { User } from "detritus-client/lib/structures"
 import { BaseSubCommand } from "../../../basecommand"
 import { Autocomplete, CommandValues } from "../../../../../utils/parameters"
 import { Succes, Error } from "../../../../../utils/icons"
@@ -6,11 +8,11 @@ import { Succes, Error } from "../../../../../utils/icons"
 const { codestring } = Utils.Markup
 
 export interface CommandArgsBefore {
-    target: Structures.User | undefined
+    target: User | undefined
 }
 
 export interface CommandArgs {
-    target: Structures.User
+    target: User
 }
 
 export const COMMAND_NAME = "remove"
@@ -39,7 +41,7 @@ export class RemoveBanCommand extends BaseSubCommand {
     onCancelRun(context: Interaction.InteractionContext) {
         return context.editOrRespond({
             content: `${Error} Ese no es un miembro válido.`,
-            flags: Constants.MessageFlags.EPHEMERAL
+            flags: MessageFlags.EPHEMERAL
         })
     }
 

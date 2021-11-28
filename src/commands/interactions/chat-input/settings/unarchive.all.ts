@@ -1,4 +1,5 @@
-import { Constants, Interaction } from "detritus-client"
+import { Interaction } from "detritus-client"
+import { InteractionCallbackTypes, Permissions } from "detritus-client/lib/constants"
 import { Succes } from "../../../../utils/icons"
 import { BaseCommand } from "../../basecommand"
 
@@ -20,13 +21,13 @@ export default class UnarchiveAllThreadsCommand extends BaseCommand {
     }
 
     permissions = [
-        Constants.Permissions.MANAGE_THREADS,
-        Constants.Permissions.MANAGE_CHANNELS,
-        Constants.Permissions.MANAGE_GUILD
+        Permissions.MANAGE_THREADS,
+        Permissions.MANAGE_CHANNELS,
+        Permissions.MANAGE_GUILD
     ]
 
     async run(context: Interaction.InteractionContext) {
-        await context.respond(Constants.InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
+        await context.respond(InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
 
         const start = Date.now()
         const unarchived: string[] = []
