@@ -1,4 +1,4 @@
-import { Interaction, Utils, Endpoints } from "detritus-client"
+import { Interaction } from "detritus-client"
 import { InteractionCallbackTypes, MessageFlags } from "detritus-client/lib/constants"
 import { BaseSubCommand } from "../../../../basecommand"
 import fetch from 'node-fetch'

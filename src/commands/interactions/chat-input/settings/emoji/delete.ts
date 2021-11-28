@@ -1,4 +1,4 @@
-import { Interaction, Structures, Utils } from "detritus-client"
+import { Interaction, Structures } from "detritus-client"
 import { InteractionCallbackTypes, MessageFlags } from "detritus-client/lib/constants"
 import { CommandValues } from "../../../../../utils/parameters"
 import { BaseSubCommand } from "../../../basecommand"
