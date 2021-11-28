@@ -1,5 +1,4 @@
 import { Interaction, Utils } from "detritus-client"
-import { MessageFlags } from "detritus-client/lib/constants"
 import { BaseContextMenuMessageCommand, ContextMenuMessageArgs } from "../../basecommand"
 
 export const COMMAND_NAME = "Raw Content"

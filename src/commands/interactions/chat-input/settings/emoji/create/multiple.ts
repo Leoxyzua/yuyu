@@ -1,5 +1,5 @@
 import { Interaction } from "detritus-client"
-import { InteractionCallbackTypes, MessageFlags } from "detritus-client/lib/constants"
+import { InteractionCallbackTypes } from "detritus-client/lib/constants"
 import { BaseSubCommand } from "../../../../basecommand"
 import fetch from 'node-fetch'
 import { CommandValues } from "../../../../../../utils/parameters"

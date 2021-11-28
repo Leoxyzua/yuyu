@@ -1,5 +1,4 @@
 import { Interaction, Utils } from "detritus-client"
-import { MessageFlags } from "detritus-client/lib/constants"
 import { User } from "detritus-client/lib/structures"
 import { BaseSubCommand } from "../../../basecommand"
 import { Autocomplete, CommandValues } from "../../../../../utils/parameters"

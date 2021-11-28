@@ -1,5 +1,5 @@
 import { Interaction, Utils } from "detritus-client"
-import { InteractionCallbackTypes, MessageFlags } from "detritus-client/lib/constants"
+import { InteractionCallbackTypes } from "detritus-client/lib/constants"
 import { BaseSubCommand } from "../../../basecommand"
 import Paginator from "../../../../../utils/paginator"
 import { Colors } from "../../../../../utils/constants"

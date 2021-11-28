@@ -1,5 +1,4 @@
 import { Interaction, Utils } from "detritus-client"
-import { MessageFlags } from "detritus-client/lib/constants"
 import { Colors } from "../../../../utils/constants"
 import { Warning } from "../../../../utils/icons"
 import { parseCategory, parseStrings, parseSubCommands } from "../../../../utils/strings"

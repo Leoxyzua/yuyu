@@ -1,5 +1,5 @@
 import { Interaction, Utils } from "detritus-client"
-import { InteractionCallbackTypes, MessageFlags } from "detritus-client/lib/constants"
+import { InteractionCallbackTypes } from "detritus-client/lib/constants"
 import { Endpoints } from "detritus-client-rest"
 import { BaseSubCommand } from "../../../../basecommand"
 import { parseEmojiName } from ".."

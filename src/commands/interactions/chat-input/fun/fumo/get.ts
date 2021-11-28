@@ -1,7 +1,7 @@
+import { Interaction } from "detritus-client"
 import { BaseSubCommand } from "../../../basecommand"
 import { FumoData } from "fumo-api"
 import { Client } from "."
-import { Constants, Interaction } from "detritus-client"
 import { Error } from "../../../../../utils/icons"
 
 export interface CommandArgsBefore {

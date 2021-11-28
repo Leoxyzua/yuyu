@@ -1,5 +1,5 @@
 import { Interaction, Utils } from "detritus-client"
-import { MessageFlags, ApplicationCommandOptionTypes, Permissions } from "detritus-client/lib/constants"
+import { ApplicationCommandOptionTypes, Permissions } from "detritus-client/lib/constants"
 import { Member, User, Role } from "detritus-client/lib/structures"
 import { Autocomplete, CommandValues } from "../../../../utils/parameters"
 import { Succes, Warning } from "../../../../utils/icons"
