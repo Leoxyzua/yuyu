@@ -70,7 +70,6 @@ export class CreateOneEmojiCommand extends BaseSubCommand {
             if (matches.length) {
                 for (const { name, animated, id } of matches) {
                     const format = (animated) ? 'gif' : 'png'
-
                     if (!args.name) args.name = name ?? 'unknown'
                     args.url = Endpoints.CDN.URL + Endpoints.CDN.EMOJI(id, format) + `?size=${animated ? 80 : 160}`
                 }
