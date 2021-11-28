@@ -20,6 +20,6 @@ export default class PingCommand extends BaseCommand<unknown> {
             .map((ping) => `${ping}: ${pings[ping]} ms`)
             .join(', ')
 
-        return context.editOrRespond(`pong! 🏓\n\n${text}`)
+        return this.safeReply(context, `pong! 🏓\n\n${text}`)
     }
 }

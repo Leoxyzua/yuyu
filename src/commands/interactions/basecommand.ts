@@ -5,7 +5,7 @@ import {
     ApplicationCommandOptionTypes,
     ApplicationCommandTypes
 } from "detritus-client/lib/constants"
-import { Member, User, Message } from "detritus-client/lib/structures"
+import { Member, User, Message, InteractionEditOrRespond } from "detritus-client/lib/structures"
 import { PermissionUnRaw, Servers, TestServers } from "../../utils/constants"
 import { Warning, Error } from "../../utils/icons"
 
@@ -14,6 +14,15 @@ import { inspect } from 'util'
 const { bold, codeblock } = Utils.Markup
 
 export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommand<ParsedArgsFinished> {
+    safeReply(context: Interaction.InteractionContext, content: InteractionEditOrRespond | string) {
+        return context.editOrRespond({
+            ...typeof content === 'string' ? { content } : content,
+            allowedMentions: {
+                parse: []
+            }
+        })
+    }
+
     onRunError(context: Interaction.InteractionContext, _args: unknown, error: any) {
         if (error.raw && error.response) console.error(`Error in the command ${this.name}`, inspect(error.raw, { depth: 7 }))
         else console.error(error)
