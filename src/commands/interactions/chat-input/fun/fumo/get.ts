@@ -1,21 +1,21 @@
-import { BaseSubCommand } from "../../../basecommand";
-import { FumoData } from "fumo-api";
-import { Client } from ".";
-import { Constants, Interaction } from "detritus-client";
-import { Error } from "../../../../../utils/icons";
+import { BaseSubCommand } from "../../../basecommand"
+import { FumoData } from "fumo-api"
+import { Client } from "."
+import { Constants, Interaction } from "detritus-client"
+import { Error } from "../../../../../utils/icons"
 
 export interface CommandArgsBefore {
-    fumo: FumoData | undefined;
+    fumo: FumoData | undefined
 }
 
 export interface CommandArgs {
-    fumo: FumoData;
+    fumo: FumoData
 }
 
-export const COMMAND_NAME = "get";
+export const COMMAND_NAME = "get"
 
 export class FumoGetCommand extends BaseSubCommand {
-    name = COMMAND_NAME;
+    name = COMMAND_NAME
     description = "Obten un fumo de la Fumo Api mediante su ID."
 
     constructor() {
@@ -27,21 +27,21 @@ export class FumoGetCommand extends BaseSubCommand {
                 required: true,
                 value: Client.cache.get.bind(Client)
             }]
-        });
+        })
     }
 
     onBeforeRun(context: Interaction.InteractionContext, args: CommandArgsBefore) {
-        return !!args.fumo;
+        return !!args.fumo
     }
 
     onCancelRun(context: Interaction.InteractionContext) {
         return context.editOrRespond({
             content: `${Error} Fumo no encontrado, asegurate de haber ingresado una ID válida.`,
             flags: Constants.MessageFlags.EPHEMERAL
-        });
+        })
     }
 
     run(context: Interaction.InteractionContext, { fumo: { URL } }: CommandArgs) {
-        return context.editOrRespond(URL);
+        return context.editOrRespond(URL)
     }
 }

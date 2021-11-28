@@ -10,8 +10,8 @@ export const Client = new FumoClient()
 export const COMMAND_NAME = "fumo"
 
 export default class FumoCommands extends BaseCommand {
-    name = COMMAND_NAME;
-    description = ".";
+    name = COMMAND_NAME
+    description = "."
 
     constructor() {
         super({
@@ -22,6 +22,6 @@ export default class FumoCommands extends BaseCommand {
                 new FumoRedditCommand()
             ],
             metadata: { category: 'fun' }
-        });
+        })
     }
 }

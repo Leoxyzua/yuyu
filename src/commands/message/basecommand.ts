@@ -1,4 +1,4 @@
-import { Command } from 'detritus-client';
+import { Command } from 'detritus-client'
 
 export const replyOptions: Command.EditOrReply = {
     reference: true,
@@ -6,6 +6,6 @@ export const replyOptions: Command.EditOrReply = {
 }
 
 export class BaseCommand<ParsedArgsFinished = Command.ParsedArgs> extends Command.Command<ParsedArgsFinished> {
-    permissionsIgnoreClientOwner = true;
-    triggerTypingAfter = 1000;
+    permissionsIgnoreClientOwner = true
+    triggerTypingAfter = 1000
 }

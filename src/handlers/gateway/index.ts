@@ -1,5 +1,5 @@
-import GuildBanAdd from "./guildBanAdd";
-import ThreadUpdate from "./threadUpdate";
+import GuildBanAdd from "./guildBanAdd"
+import ThreadUpdate from "./threadUpdate"
 
 export {
     GuildBanAdd,

@@ -6,8 +6,8 @@ import { Colors } from "../../../../../utils/constants"
 import Paginator from "../../../../../utils/paginator"
 
 export interface Field {
-    text: string;
-    thumbnail: string;
+    text: string
+    thumbnail: string
 }
 
 const { bold, url } = Utils.Markup

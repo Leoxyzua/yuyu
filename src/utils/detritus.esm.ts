@@ -5,8 +5,8 @@ import {
     Interaction,
     Utils,
     Command
-} from 'detritus-client';
-import path from 'path';
+} from 'detritus-client'
+import path from 'path'
 
 // support for esm, just modified
 
@@ -15,46 +15,45 @@ CommandClient.prototype.addMultipleIn = async function (
     directory: string,
     options: { isAbsolute?: boolean, subdirectories?: boolean } = {},
 ): Promise<CommandClient> {
-    options = Object.assign({ subdirectories: true }, options);
-    this.directories.set(directory, { subdirectories: !!options.subdirectories });
+    options = Object.assign({ subdirectories: true }, options)
+    this.directories.set(directory, { subdirectories: !!options.subdirectories })
 
-    const files: Array<string> = await Utils.getFiles(directory, options.subdirectories);
-    const errors: Record<string, any> = {};
+    const files: Array<string> = await Utils.getFiles(directory, options.subdirectories)
+    const errors: Record<string, any> = {}
 
     const addCommand = (imported: any, filepath: string): void => {
-        if (!imported) {
-            return;
-        }
+        if (!imported) return
+
         if (typeof (imported) === 'function') {
-            this.add({ _file: filepath, _class: imported, name: '' });
+            this.add({ _file: filepath, _class: imported, name: '' })
         } else if (imported instanceof Command.Command) {
-            Object.defineProperty(imported, '_file', { value: filepath });
-            this.add(imported);
+            Object.defineProperty(imported, '_file', { value: filepath })
+            this.add(imported)
         } else if (typeof (imported) === 'object' && Object.keys(imported).length) {
             if (Array.isArray(imported)) {
                 for (const child of imported) {
-                    addCommand(child, filepath);
+                    addCommand(child, filepath)
                 }
             } else {
                 if ('name' in imported) {
-                    this.add({ ...imported, _file: filepath });
+                    this.add({ ...imported, _file: filepath })
                 }
             }
         }
-    };
+    }
+
     for (const file of files) {
-        if (!file.endsWith((Constants.IS_TS_NODE) ? '.ts' : '.js')) {
-            continue;
-        }
-        const filepath = path.resolve(directory, file);
+        if (!file.endsWith((Constants.IS_TS_NODE) ? '.ts' : '.js')) continue
+
+        const filepath = path.resolve(directory, file)
         try {
-            let importedCommand: any = await import("file:///" + filepath);
+            let importedCommand: any = await import("file:///" + filepath)
             if (typeof (importedCommand) === 'object') {
-                importedCommand = importedCommand.default;
+                importedCommand = importedCommand.default
             }
-            addCommand(importedCommand, filepath);
+            addCommand(importedCommand, filepath)
         } catch (error) {
-            errors[filepath] = error;
+            errors[filepath] = error
         }
     }
 
@@ -62,7 +61,7 @@ CommandClient.prototype.addMultipleIn = async function (
         throw errors
     }
 
-    return this;
+    return this
 }
 
 InteractionCommandClient.prototype.addMultipleIn = async function (
@@ -70,52 +69,51 @@ InteractionCommandClient.prototype.addMultipleIn = async function (
     directory: string,
     options: { isAbsolute?: boolean, subdirectories?: boolean } = {},
 ): Promise<InteractionCommandClient> {
-    options = Object.assign({ subdirectories: true }, options);
-    this.directories.set(directory, { subdirectories: !!options.subdirectories });
+    options = Object.assign({ subdirectories: true }, options)
+    this.directories.set(directory, { subdirectories: !!options.subdirectories })
 
-    const files: Array<string> = await Utils.getFiles(directory, options.subdirectories);
-    const errors: Record<string, any> = {};
+    const files: Array<string> = await Utils.getFiles(directory, options.subdirectories)
+    const errors: Record<string, any> = {}
 
     const addCommand = (imported: any, filepath: string): void => {
-        if (!imported) {
-            return;
-        }
+        if (!imported) return
+
         if (typeof (imported) === 'function') {
-            this.add({ _file: filepath, _class: imported, name: '' });
+            this.add({ _file: filepath, _class: imported, name: '' })
         } else if (imported instanceof Interaction.InteractionCommand) {
-            Object.defineProperty(imported, '_file', { value: filepath });
-            this.add(imported);
+            Object.defineProperty(imported, '_file', { value: filepath })
+            this.add(imported)
         } else if (typeof (imported) === 'object' && Object.keys(imported).length) {
             if (Array.isArray(imported)) {
                 for (const child of imported) {
-                    addCommand(child, filepath);
+                    addCommand(child, filepath)
                 }
             } else {
                 if ('name' in imported) {
-                    this.add({ ...imported, _file: filepath });
+                    this.add({ ...imported, _file: filepath })
                 }
             }
         }
-    };
+    }
+
     for (const file of files) {
-        if (!file.endsWith((Constants.IS_TS_NODE) ? '.ts' : '.js')) {
-            continue;
-        }
-        const filepath = path.resolve(directory, file);
+        if (!file.endsWith((Constants.IS_TS_NODE) ? '.ts' : '.js')) continue
+
+        const filepath = path.resolve(directory, file)
         try {
-            let importedCommand: any = await import("file:///" + filepath);
+            let importedCommand: any = await import("file:///" + filepath)
             if (typeof (importedCommand) === 'object') {
-                importedCommand = importedCommand.default;
+                importedCommand = importedCommand.default
             }
-            addCommand(importedCommand, filepath);
+            addCommand(importedCommand, filepath)
         } catch (error) {
-            errors[filepath] = error;
+            errors[filepath] = error
         }
     }
 
     if (Object.keys(errors).length) {
-        throw errors;
+        throw errors
     }
 
-    return this;
+    return this
 }

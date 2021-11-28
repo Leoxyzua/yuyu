@@ -1,15 +1,15 @@
-import { Constants } from "detritus-client";
-import { BaseCommand } from "../../../basecommand";
+import { Constants } from "detritus-client"
+import { BaseCommand } from "../../../basecommand"
 
-import { CreateBanCommand } from './create';
-import { RemoveBanCommand } from "./remove";
+import { CreateBanCommand } from './create'
+import { RemoveBanCommand } from "./remove"
 
 
-export const COMMAND_NAME = "ban";
+export const COMMAND_NAME = "ban"
 
 export default class BanCommands extends BaseCommand {
-    name = COMMAND_NAME;
-    description = ".";
+    name = COMMAND_NAME
+    description = "."
 
     constructor() {
         super({
@@ -18,8 +18,8 @@ export default class BanCommands extends BaseCommand {
                 new CreateBanCommand(),
                 new RemoveBanCommand(),
             ]
-        });
+        })
     }
 
-    permissions = [Constants.Permissions.BAN_MEMBERS];
+    permissions = [Constants.Permissions.BAN_MEMBERS]
 }

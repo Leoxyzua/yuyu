@@ -16,7 +16,7 @@ export class FumoRandomCommand extends BaseSubCommand {
         const embed = new Utils.Embed()
             .setColor(Colors.INVISIBLE)
             .setImage(URL)
-            .setFooter(`ID: ${_id}`);
+            .setFooter(`ID: ${_id}`)
 
         const components = new Utils.Components({
             timeout: 1000 * 20,
@@ -27,6 +27,6 @@ export class FumoRandomCommand extends BaseSubCommand {
             run: this.run.bind(this)
         })
 
-        return context.editOrRespond({ embed, components });
+        return context.editOrRespond({ embed, components })
     }
 }

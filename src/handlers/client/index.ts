@@ -1,4 +1,4 @@
-import CommandRan from "./commandRan";
+import CommandRan from "./commandRan"
 
 export {
     CommandRan

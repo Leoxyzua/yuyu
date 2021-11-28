@@ -1,4 +1,4 @@
-import { Permissions } from "detritus-client/lib/constants";
+import { Permissions } from "detritus-client/lib/constants"
 
 export enum Colors {
     INVISIBLE = 0x2F3136
@@ -19,7 +19,7 @@ export const TestServers = [
 
 export const Servers = [
     "876339668956893216" // Manitos Dou
-];
+]
 
 export const PermissionUnRaw = Object.freeze({
     [String(Permissions.ADD_REACTIONS)]: 'Añadir Reacciones',
@@ -60,4 +60,4 @@ export const PermissionUnRaw = Object.freeze({
     [String(Permissions.VIEW_AUDIT_LOG)]: 'View Audit Logs',
     [String(Permissions.VIEW_CHANNEL)]: 'View Channel',
     [String(Permissions.VIEW_GUILD_ANALYTICS)]: 'View Guild Analytics',
-});
+})

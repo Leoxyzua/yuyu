@@ -1,13 +1,13 @@
-import { BaseSubCommandGroup } from "../../../../basecommand.js";
+import { BaseSubCommandGroup } from "../../../../basecommand.js"
 
-import { CreateMultipleEmojisCommand } from "./multiple";
-import { CreateOneEmojiCommand } from "./one";
+import { CreateMultipleEmojisCommand } from "./multiple"
+import { CreateOneEmojiCommand } from "./one"
 
-export const COMMAND_NAME = "create";
+export const COMMAND_NAME = "create"
 
 export class CreateEmojiCommands extends BaseSubCommandGroup {
-    name = COMMAND_NAME;
-    description = '.';
+    name = COMMAND_NAME
+    description = '.'
 
     constructor() {
         super({
@@ -15,6 +15,6 @@ export class CreateEmojiCommands extends BaseSubCommandGroup {
                 new CreateOneEmojiCommand(),
                 new CreateMultipleEmojisCommand()
             ]
-        });
+        })
     }
 }
