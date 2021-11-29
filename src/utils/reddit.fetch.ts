@@ -34,9 +34,9 @@ export interface RedditFetch {
 }
 
 export default async function (options: FetchOptions): Promise<null | RedditPost[]> {
-    const {
-        data: { children }
-    } = await (await fetch(`https://www.reddit.com/r/${options.subreddit}/new.json?limit=${options.limit ?? 25}`)).json() as RedditFetch
+    const json = await (await fetch(`https://www.reddit.com/r/${options.subreddit}/new.json?limit=${options.limit ?? 25}`)).json() as RedditFetch
+    if (!json?.data) return null
+    const { children } = json.data
 
     if (!children.length) return null
 
