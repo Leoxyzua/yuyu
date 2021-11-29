@@ -182,7 +182,7 @@ export default class Paginator implements Options {
     }
 
     async clearMessage(content = `${Succes} Cancelado.`) {
-        if (!this.jump.message) return;
+        if (!this.jump.message) return
 
         await this.context.editMessage(this.jump.message.id, {
             content
