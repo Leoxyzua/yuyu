@@ -1,28 +1,26 @@
-import { Interaction, Utils } from "detritus-client"
+import { GatewayClientEvents, Interaction, Utils } from "detritus-client"
 import {
     MessageFlags,
     InteractionCallbackTypes,
     MessageComponentButtonStyles
 } from "detritus-client/lib/constants"
+import { Message } from "detritus-client/lib/structures"
+import { Succes, Warning } from "./icons"
 
 export type OnPage = (page: number, pageObject?: any[]) => Promise<Utils.Embed | Utils.Embed[]> | Utils.Embed | Utils.Embed[]
 export type Content = (page: number, pageObject?: any[]) => string
 
-export function FormatEmoji(raw: string) {
-    const [, name, id] = raw.replace(/[<|>]/gi, '').split(':')
-
-    return { emoji: { name, id } }
-}
-
 export enum Emojis {
     PREVIOUS = "<:sciteluyuY:912792825291210853>",
     CANCEL = "<:yuyuShoot:912793999906062396>",
+    JUMP = "<a:Yuyubounce:601703816919777280>",
     NEXT = "<:Yuyuletics:653377241870499841>"
 }
 
 export enum EmojiNames {
     PREVIOUS = "previous",
     CANCEL = "cancel",
+    JUMP = "jump",
     NEXT = "next"
 }
 
@@ -47,6 +45,12 @@ export default class Paginator implements Options {
     page = 1
     lastPage?: number
     pageObject = 0
+    jump: {
+        message?: Message | null,
+        active: boolean
+    } = {
+            active: false
+        }
 
     constructor(context: Interaction.InteractionContext, options: Options) {
         this.context = context
@@ -72,6 +76,7 @@ export default class Paginator implements Options {
             ? Math.ceil(this.baseArray?.length! / this.objectsPerPage!)
             : this.baseArray?.length
 
+        context.client.subscribe('messageCreate', (payload) => this.onMessage(payload))
         console.log(`Paginator started by ${context.user.tag} in channel ${context.channel?.name}`)
     }
 
@@ -97,19 +102,25 @@ export default class Paginator implements Options {
             row.createButton({
                 customId: EmojiNames.PREVIOUS,
                 disabled: this.page === 1,
-                ...FormatEmoji(Emojis.PREVIOUS)
+                emoji: Emojis.PREVIOUS
             })
 
             row.createButton({
                 customId: EmojiNames.CANCEL,
                 style: MessageComponentButtonStyles.DANGER,
-                ...FormatEmoji(Emojis.CANCEL)
+                emoji: Emojis.CANCEL
+            })
+
+            row.createButton({
+                customId: EmojiNames.JUMP,
+                style: this.jump.active ? MessageComponentButtonStyles.DANGER : undefined,
+                emoji: Emojis.JUMP
             })
 
             row.createButton({
                 customId: EmojiNames.NEXT,
                 disabled: this.page === this.lastPage,
-                ...FormatEmoji(Emojis.NEXT)
+                emoji: Emojis.NEXT
             })
         }
 
@@ -146,11 +157,49 @@ export default class Paginator implements Options {
         })
     }
 
+    async onMessage({ message }: GatewayClientEvents.MessageCreate) {
+        if (
+            message.fromBot ||
+            message.author.id !== this.context.userId ||
+            !message.content ||
+            !this.jump.message
+        ) return
+
+        const page = parseInt(message.content)
+        if (isNaN(page) || page > this.lastPage! || 1 > page) return this.throwInvalidPage()
+
+        this.setPage(page, this.objectsPerPage! * page)
+        await this.clearMessage(`${Succes} Saltando a la página **${page}**`)
+        await this.createMessage()
+    }
+
+    async throwInvalidPage() {
+        if (!this.jump.message) return
+
+        await this.context.editMessage(this.jump.message.id, {
+            content: `${Warning} Página inválida, escribe de nuevo una válida o pulsa de nuevo el boton para cancelar.`
+        })
+    }
+
+    async clearMessage(content = `${Succes} Cancelado.`) {
+        if (!this.jump.message) return;
+
+        await this.context.editMessage(this.jump.message.id, {
+            content
+        })
+
+        this.jump.active = false
+        this.jump.message = null
+    }
+
     async updatePage(context: Utils.ComponentContext) {
         if (context.userId !== this.context.userId) return context.createMessage({
             content: 'No puedes usar esto.',
             flags: MessageFlags.EPHEMERAL
         })
+
+        await context.respond(InteractionCallbackTypes.DEFERRED_UPDATE_MESSAGE)
+            .catch(() => console.info(`Unable to respond interaction in paginator of ${context.user.tag} in #${context.channel?.name}`))
 
         switch (context.customId) {
             case EmojiNames.PREVIOUS:
@@ -160,13 +209,22 @@ export default class Paginator implements Options {
             case EmojiNames.CANCEL:
                 return this.cancel()
 
+            case EmojiNames.JUMP:
+                if (this.jump.active) await this.clearMessage()
+                else {
+                    this.jump.message = await context.createMessage({
+                        content: '¿A qué página quieres ir?',
+                        flags: MessageFlags.EPHEMERAL
+                    })
+                    this.jump.active = true
+                }
+                break
+
             case EmojiNames.NEXT:
                 this.setPage(this.page + 1, this.pageObject + this.objectsPerPage!)
                 break
         }
 
-        await context.respond(InteractionCallbackTypes.DEFERRED_UPDATE_MESSAGE)
-            .catch(() => console.info(`Unable to respond interaction in paginator of ${context.user.tag} in #${context.channel?.name}`))
         await this.createMessage()
     }
 }
