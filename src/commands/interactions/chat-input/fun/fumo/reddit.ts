@@ -49,6 +49,7 @@ export class FumoRedditCommand extends BaseSubCommand {
 
         const paginator = new Paginator(context, {
             content: (page) => `Post ${(bold(page + "/" + data.length))}`,
+            baseArray: data,
             onPage: (page) => {
                 const post = data[page - 1]
                 const description = [post.title + '\n']
