@@ -73,7 +73,7 @@ export class EmojiListCommand extends BaseSubCommand {
         const paginator = new Paginator(context, {
             baseArray: search,
             objectsPerPage: 10,
-            content: (page) => `Pagina **${page + "/" + Math.ceil(search.length / 10)}**`,
+            content: (page) => `Página **${page + "/" + Math.ceil(search.length / 10)}**`,
             onPage: (page, emojis?: typeof search) => {
                 const embed = new Utils.Embed()
                     .setColor(Colors.INVISIBLE)

@@ -24,7 +24,7 @@ export class FumoListCommand extends BaseSubCommand {
             objectsPerPage: 4,
             content: (page) => {
                 const pages = Math.ceil(list.length / 4)
-                return `Pagina ${bold(page + "/" + pages)}`
+                return `Página ${bold(page + "/" + pages)}`
             },
             onPage: (_page, fumos?: FumoData[]) => {
                 const fields: Field[] = []
