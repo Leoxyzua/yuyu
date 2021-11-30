@@ -1,4 +1,9 @@
 import * as Autocomplete from "./autocomplete"
 import * as CommandValues from "./command.values"
+import * as Commands from "./commands"
 
-export { Autocomplete, CommandValues }
+export {
+    Commands,
+    Autocomplete,
+    CommandValues
+}
