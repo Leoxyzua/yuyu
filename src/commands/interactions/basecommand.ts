@@ -9,6 +9,7 @@ import { Member, User, Message, InteractionEditOrRespond } from "detritus-client
 import { PermissionUnRaw, Servers, TestServers } from "../../utils/constants"
 import { Warning, Error } from "../../utils/icons"
 import { inspect } from 'util'
+import { safeReply } from "../../utils/tools"
 const { bold, codeblock } = Utils.Markup
 
 export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommand<ParsedArgsFinished> {
@@ -17,16 +18,7 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
         content: InteractionEditOrRespond | string = {},
         ephemeral?: boolean
     ) {
-        const flags = ephemeral
-            ? MessageFlags.EPHEMERAL
-            : typeof content !== 'string' && content.flags
-                ? content.flags
-                : undefined
-
-        return context.editOrRespond({
-            ...typeof content === 'string' ? { content } : content,
-            flags
-        })
+        return safeReply(context, content, ephemeral)
     }
 
     onRunError(context: Interaction.InteractionContext, _args: unknown, error: any) {
@@ -110,16 +102,7 @@ export class BaseSubCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends
         content: InteractionEditOrRespond | string = {},
         ephemeral?: boolean
     ) {
-        const flags = ephemeral
-            ? MessageFlags.EPHEMERAL
-            : typeof content !== 'string' && content.flags
-                ? content.flags
-                : undefined
-
-        return context.editOrRespond({
-            ...typeof content === 'string' ? { content } : content,
-            flags
-        })
+        return safeReply(context, content, ephemeral)
     }
 }
 
@@ -130,16 +113,7 @@ export class BaseSubCommandGroup<ParsedArgsFinished = Interaction.ParsedArgs> ex
         content: InteractionEditOrRespond | string = {},
         ephemeral?: boolean
     ) {
-        const flags = ephemeral
-            ? MessageFlags.EPHEMERAL
-            : typeof content !== 'string' && content.flags
-                ? content.flags
-                : undefined
-
-        return context.editOrRespond({
-            ...typeof content === 'string' ? { content } : content,
-            flags
-        })
+        return safeReply(context, content, ephemeral)
     }
 }
 
