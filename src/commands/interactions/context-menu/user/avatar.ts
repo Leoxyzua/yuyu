@@ -1,6 +1,6 @@
-import { InteractionContext } from "detritus-client/lib/interaction";
-import { Commands } from "../../../../utils/parameters";
-import { BaseContextMenuUserCommand, ContextMenuUserArgs } from "../../basecommand";
+import { InteractionContext } from "detritus-client/lib/interaction"
+import { Commands } from "../../../../utils/parameters"
+import { BaseContextMenuUserCommand, ContextMenuUserArgs } from "../../basecommand"
 
 export const COMMAND_NAME = "User Avatar"
 
