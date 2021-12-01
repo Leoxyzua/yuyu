@@ -12,6 +12,24 @@ export enum categories {
     misc = "Extra"
 }
 
+export const SomeRandomApiURL = 'https://some-random-api.ml'
+
+export const SomeRandomApiEndpoints = {
+    ANIMAL_DOG: '/animal/dog',
+    ANIMAL_CAT: '/animal/cat',
+    ANIMAL_PANDA: '/animal/panda',
+    ANIMAL_FOX: '/animal/fox',
+    ANIMAL_RED_PANDA: '/animal/red_panda',
+    ANIMAL_KOALA: '/animal/koala',
+    ANIMAL_BIRD: '/animal/bird',
+    ANIMAL_RACCOON: '/animal/raccoon'
+}
+
+export interface SomeRandomApiAnimalRequest {
+    image: string
+    fact: string
+}
+
 export const YOUTUBE_VIDEO_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(?<id>[a-zA-Z0-9_-]{11})/
 export const REDDIT_BASE_URL = "https://reddit.com"
 export const CDN_URL_REGEX = /(https?:\/\/.*\.(?:png|jpg|gif))/

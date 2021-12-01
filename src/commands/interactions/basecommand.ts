@@ -125,6 +125,7 @@ export class BaseContextMenuMessageCommand extends BaseCommand<ContextMenuMessag
     type = ApplicationCommandTypes.MESSAGE
     triggerLoadingAfter = 1000
     triggerLoadingAsEphemeral = true
+    metadata = { category: 'context-menu ' }
 }
 
 export interface ContextMenuUserArgs {
@@ -136,4 +137,5 @@ export class BaseContextMenuUserCommand extends BaseCommand<ContextMenuUserArgs>
     type = ApplicationCommandTypes.USER
     triggerLoadingAfter = 1000
     triggerLoadingAsEphemeral = true
+    metadata = { category: 'context-menu ' }
 }
