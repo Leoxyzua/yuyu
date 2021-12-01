@@ -12,6 +12,16 @@ export enum categories {
     misc = "Extra"
 }
 
+export const YOUTUBE_VIDEO_URL_REGEX = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(?<id>[a-zA-Z0-9_-]{11})/
+export const REDDIT_BASE_URL = "https://reddit.com"
+export const CDN_URL_REGEX = /(https?:\/\/.*\.(?:png|jpg|gif))/
+
+export const FumoSubReddits = [
+    'FumoFumo',
+    'Touhou',
+    '2hujerk' // there are some posts so ok
+]
+
 export const TestServers = [
     "882716951233839176", // Testing
     "846922026987946035"  // More Testing

@@ -17,3 +17,7 @@ export function safeReply(
         allowedMentions: { parse: [] }
     })
 }
+
+export function parseEmojiName(str: string) {
+    return str.replace(/[\W_]+/g, "_")
+}
