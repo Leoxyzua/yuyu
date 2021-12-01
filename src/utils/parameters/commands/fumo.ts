@@ -18,7 +18,7 @@ import redditFetch from "../../reddit.fetch"
 import { safeReply } from "../../tools"
 import { UpdateIcon } from "../../icons"
 
-export const client = new FumoClient()
+export const fumoClient = new FumoClient()
 
 export interface Field {
     text: string
@@ -45,7 +45,7 @@ export function get(context: InteractionContext, args: arguments.get) {
 }
 
 export function list(context: InteractionContext) {
-    const { list } = client.cache
+    const { list } = fumoClient.cache
 
     const paginator = new Paginator(context, {
         baseArray: list,
@@ -70,7 +70,7 @@ export function list(context: InteractionContext) {
 
             const embeds = fields
                 .map((field) => new Embed({
-                    url: client.url,
+                    url: fumoClient.url,
                     description: fields.map((field) => field.text).join("\n"),
                 })
                     .setColor(Colors.INVISIBLE)
@@ -83,7 +83,7 @@ export function list(context: InteractionContext) {
     return paginator.createMessage()
 }
 export function random(context: InteractionContext | ComponentContext) {
-    const { URL, _id } = client.cache.random
+    const { URL, _id } = fumoClient.cache.random
 
     const embed = new Embed()
         .setColor(Colors.INVISIBLE)
