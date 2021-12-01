@@ -1,12 +1,10 @@
 import { BaseCommand } from "../../../basecommand"
-import { FumoClient } from "fumo-api"
 
 import { FumoGetCommand } from "./get"
 import { FumoRandomCommand } from "./random"
 import { FumoListCommand } from "./list"
 import { FumoRedditCommand } from "./reddit"
 
-export const Client = new FumoClient()
 export const COMMAND_NAME = "fumo"
 
 export default class FumoCommands extends BaseCommand {

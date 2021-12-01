@@ -1,57 +1,13 @@
-import { Interaction, Utils } from "detritus-client"
+import { InteractionContext } from "detritus-client/lib/interaction"
+import { Commands } from "../../../../../utils/parameters"
 import { BaseSubCommand } from "../../../basecommand"
-import { FumoData } from "fumo-api"
-import { Client } from "."
-import { Colors } from "../../../../../utils/constants"
-import Paginator from "../../../../../utils/paginator"
 
-export interface Field {
-    text: string
-    thumbnail: string
-}
-
-const { bold, url } = Utils.Markup
 export const COMMAND_NAME = "list"
 
 export class FumoListCommand extends BaseSubCommand {
     name = COMMAND_NAME
     description = "Lista de todos los fumos en la Fumo Api"
-    async run(context: Interaction.InteractionContext) {
-        const { list } = Client.cache
-
-        const paginator = new Paginator(context, {
-            baseArray: list,
-            objectsPerPage: 4,
-            content: (page) => {
-                const pages = Math.ceil(list.length / 4)
-                return `Página ${bold(page + "/" + pages)}`
-            },
-            onPage: (_page, fumos?: FumoData[]) => {
-                const fields: Field[] = []
-
-                if (fumos) {
-                    for (const fumo of fumos) {
-                        const index = list.indexOf(fumo) + 1
-
-                        fields.push({
-                            text: `> ${bold("#" + index)} ${fumo._id} - ${bold(url('URL', fumo.URL, 'Un fumo'))}`,
-                            thumbnail: fumo.URL
-                        })
-                    }
-                }
-
-                const embeds = fields
-                    .map((field) => new Utils.Embed({
-                        url: Client.url,
-                        description: fields.map((field) => field.text).join("\n"),
-                    })
-                        .setColor(Colors.INVISIBLE)
-                        .setImage(field.thumbnail)) // actually creating multiple embeds with different image urls shows the same image so idk
-
-                return embeds
-            }
-        })
-
-        return paginator.createMessage()
+    async run(context: InteractionContext) {
+        return Commands.Fumo.list(context)
     }
 }

@@ -1,18 +1,7 @@
-import { Interaction, Utils } from "detritus-client"
-import { User } from "detritus-client/lib/structures"
+import { InteractionContext } from "detritus-client/lib/interaction"
 import { BaseSubCommand } from "../../../basecommand"
-import { Autocomplete, CommandValues } from "../../../../../utils/parameters"
-import { Succes, Error } from "../../../../../utils/icons"
-
-const { codestring } = Utils.Markup
-
-export interface CommandArgsBefore {
-    target: User | undefined
-}
-
-export interface CommandArgs {
-    target: User
-}
+import { Autocomplete, Commands, CommandValues } from "../../../../../utils/parameters"
+import { Error } from "../../../../../utils/icons"
 
 export const COMMAND_NAME = "remove"
 
@@ -33,19 +22,15 @@ export class RemoveBanCommand extends BaseSubCommand {
         })
     }
 
-    onBeforeRun(context: Interaction.InteractionContext, args: CommandArgsBefore) {
+    onBeforeRun(context: InteractionContext, args: Commands.Ban.argumentsBefore.remove) {
         return !!args.target
     }
 
-    onCancelRun(context: Interaction.InteractionContext) {
+    onCancelRun(context: InteractionContext) {
         return this.safeReply(context, `${Error} Ese no es un miembro válido.`, true)
     }
 
-    async run(context: Interaction.InteractionContext, args: CommandArgs) {
-        await context.guild?.removeBan(args.target.id, {
-            reason: `Moderador responsable: ${context.user.tag}`
-        })
-
-        return this.safeReply(context, `${Succes} ${args.target.bot ? 'Bot' : 'Miembro'} ${codestring(args.target.tag)} desbaneado.`)
+    async run(context: InteractionContext, args: Commands.Ban.arguments.remove) {
+        return Commands.Ban.remove(context, args)
     }
 }

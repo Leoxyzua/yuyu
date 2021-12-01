@@ -1,18 +1,8 @@
-import { Interaction } from "detritus-client"
-import { InteractionCallbackTypes } from "detritus-client/lib/constants"
+import { InteractionContext } from "detritus-client/lib/interaction"
 import { BaseSubCommand } from "../../../../basecommand"
-import fetch from 'node-fetch'
-import { CommandValues } from "../../../../../../utils/parameters"
+import { Commands, CommandValues } from "../../../../../../utils/parameters"
 
 export const COMMAND_NAME = 'multiple'
-
-export interface CommandArgsBefore {
-    emojis: CommandValues.EmojiBase[] | false
-}
-
-export interface CommandArgs {
-    emojis: CommandValues.EmojiBase[]
-}
 
 export class CreateMultipleEmojisCommand extends BaseSubCommand {
     name = COMMAND_NAME
@@ -29,33 +19,17 @@ export class CreateMultipleEmojisCommand extends BaseSubCommand {
         })
     }
 
-    onBeforeRun(_context: Interaction.InteractionContext, args: CommandArgsBefore) {
+    onBeforeRun(_context: InteractionContext, args: Commands.Emoji.argumentsBefore.createMultiple) {
         return !!args.emojis
     }
 
-    onCancelRun(context: Interaction.InteractionContext, args: CommandArgsBefore) {
+    onCancelRun(context: InteractionContext, args: Commands.Emoji.argumentsBefore.createMultiple) {
         if (args.emojis === false) {
             return this.safeReply(context, `No pude encontrar ningun emoji.`, true)
         }
     }
 
-    async run(context: Interaction.InteractionContext, args: CommandArgs) {
-        await context.respond(InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
-
-        const names = []
-
-        for (const { url, name } of args.emojis) {
-            const image = await fetch(url)
-                .then((res) => res.arrayBuffer())
-                .catch(() => []) as Buffer
-
-            if (!image.length) continue
-
-            const emoji = await context.guild?.createEmoji({ image, name }).catch(() => undefined)
-
-            if (emoji) names.push(emoji.toString())
-        }
-
-        return this.safeReply(context, `Cree correctamente **${names.length}** emoji(s)!\n\n${names.join(', ')}`)
+    async run(context: InteractionContext, args: Commands.Emoji.arguments.createMultiple) {
+        return Commands.Emoji.createMultiple(context, args)
     }
 }

@@ -50,3 +50,19 @@ export async function parseDuration(context: InteractionAutoCompleteContext) {
 
     return context.respond({ choices })
 }
+
+export function findCommands(context: InteractionAutoCompleteContext) {
+    const { commands } = context.client.interactionCommandClient!
+    const value = context.value.toString()
+
+    let choices: Array<{ name: string, value: string }> = []
+
+    if (value) {
+        // no idea for name of declarations moment
+        const found = commands.filter(({ name }) => name === value || name.includes(value))
+
+        if (found) choices = found.map(({ name }) => ({ name, value: name }))
+    } else choices = commands.map(({ name }) => ({ name, value: name }))
+
+    return context.respond({ choices: choices.slice(0, 25) })
+}

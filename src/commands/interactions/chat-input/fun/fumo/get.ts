@@ -1,16 +1,7 @@
-import { Interaction } from "detritus-client"
+import { InteractionContext } from "detritus-client/lib/interaction"
 import { BaseSubCommand } from "../../../basecommand"
-import { FumoData } from "fumo-api"
-import { Client } from "."
+import { Commands } from "../../../../../utils/parameters"
 import { Error } from "../../../../../utils/icons"
-
-export interface CommandArgsBefore {
-    fumo: FumoData | undefined
-}
-
-export interface CommandArgs {
-    fumo: FumoData
-}
 
 export const COMMAND_NAME = "get"
 
@@ -25,16 +16,16 @@ export class FumoGetCommand extends BaseSubCommand {
                 label: 'fumo',
                 description: 'La ID del fumo',
                 required: true,
-                value: Client.cache.get.bind(Client)
+                value: Commands.Fumo.fumoClient.cache.get.bind(Commands.Fumo.fumoClient)
             }]
         })
     }
 
-    onBeforeRun(context: Interaction.InteractionContext, args: CommandArgsBefore) {
+    onBeforeRun(context: InteractionContext, args: Commands.Fumo.arguments.get) {
         return !!args.fumo
     }
 
-    onCancelRun(context: Interaction.InteractionContext) {
+    onCancelRun(context: InteractionContext) {
         return this.safeReply(
             context,
             `${Error} Fumo no encontrado, asegurate de haber ingresado una ID válida.`,
@@ -42,7 +33,7 @@ export class FumoGetCommand extends BaseSubCommand {
         )
     }
 
-    run(context: Interaction.InteractionContext, { fumo: { URL } }: CommandArgs) {
-        return this.safeReply(context, URL)
+    run(context: InteractionContext, args: Commands.Fumo.arguments.get) {
+        return Commands.Fumo.get(context, args)
     }
 }

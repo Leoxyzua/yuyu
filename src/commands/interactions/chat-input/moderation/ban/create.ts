@@ -1,16 +1,8 @@
-import { Interaction, Utils } from "detritus-client"
+import { InteractionContext } from "detritus-client/lib/interaction"
 import { ApplicationCommandOptionTypes } from "detritus-client/lib/constants"
-import { Member, User } from "detritus-client/lib/structures"
+import { Member } from "detritus-client/lib/structures"
 import { BaseSubCommand } from "../../../basecommand"
-import { Succes } from "../../../../../utils/icons"
-
-const { codestring, bold } = Utils.Markup
-
-export interface CommandArgs {
-    target: Member | User
-    reason: string // not undefined, it has a default value
-    delete_days?: string
-}
+import { Commands } from "../../../../../utils/parameters"
 
 export const COMMAND_NAME = "create"
 
@@ -41,7 +33,7 @@ export class CreateBanCommand extends BaseSubCommand {
         })
     }
 
-    onBeforeRun(context: Interaction.InteractionContext, { target }: CommandArgs) {
+    onBeforeRun(context: InteractionContext, { target }: Commands.Ban.arguments.create) {
         if (!context.guild || !context.me) return false
         if (!context.guild.members.has(target.id)) return true
         if (target instanceof Member && target.highestRole?.position! > context.member?.highestRole?.position!) return false
@@ -49,20 +41,11 @@ export class CreateBanCommand extends BaseSubCommand {
         return context.me.canEdit(target as any) && (context.me.id !== target.id) && (target.id !== context.user.id)
     }
 
-    onCancelRun(context: Interaction.InteractionContext, args: CommandArgs) {
+    onCancelRun(context: InteractionContext, args: Commands.Ban.arguments.create) {
         return this.safeReply(context, `${args.target.mention} no puede ser baneado.`, true)
     }
 
-    async run(context: Interaction.InteractionContext, args: CommandArgs) {
-        const { target, reason, delete_days } = args
-
-        await context.guild?.createBan(target.id, {
-            reason: `Moderador responsable: ${context.user.tag} | Razón: ${reason}`,
-            deleteMessageDays: delete_days,
-        })
-
-        const isBot = target instanceof User ? target.bot : target.user.bot
-
-        return this.safeReply(context, `${Succes} ${isBot ? 'Bot' : 'Miembro'} ${codestring(target.tag)} baneado con éxito por la razón ${bold(reason)}.`)
+    async run(context: InteractionContext, args: Commands.Ban.arguments.create) {
+        return Commands.Ban.create(context, args)
     }
 }

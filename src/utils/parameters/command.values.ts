@@ -60,3 +60,9 @@ export function parseEmojisToAdd(value: string) {
 
     return emojis.length ? emojis : false
 }
+
+export function findCommand(input: string, context: Interaction.InteractionContext) {
+    const { commands } = context.client.interactionCommandClient!
+
+    return commands.find(({ name }) => name === input) ?? false
+}

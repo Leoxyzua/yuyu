@@ -1,11 +1,12 @@
 import { Interaction } from "detritus-client"
+import { Commands } from "../../../utils/parameters"
 import { BaseCommand } from "../basecommand"
 
 export const COMMAND_NAME = 'ping'
 
 export default class PingCommand extends BaseCommand<unknown> {
     name = COMMAND_NAME
-    description = "Pong! :D"
+    description = "Pong!"
 
     constructor() {
         super({
@@ -14,12 +15,6 @@ export default class PingCommand extends BaseCommand<unknown> {
     }
 
     async run(context: Interaction.InteractionContext) {
-        const pings: { [key: string]: number } = await context.client.ping()
-
-        const text = Object.keys(pings)
-            .map((ping) => `${ping}: ${pings[ping]} ms`)
-            .join(', ')
-
-        return this.safeReply(context, `pong! 🏓\n\n${text}`)
+        return Commands.ping(context)
     }
 }

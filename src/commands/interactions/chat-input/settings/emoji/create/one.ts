@@ -1,19 +1,10 @@
-import { Interaction, Utils } from "detritus-client"
-import { InteractionCallbackTypes } from "detritus-client/lib/constants"
-import { Endpoints } from "detritus-client-rest"
+import { InteractionContext } from "detritus-client/lib/interaction"
+import { regex } from "detritus-client/lib/utils"
 import { BaseSubCommand } from "../../../../basecommand"
-import { parseEmojiName } from ".."
-import fetch from 'node-fetch'
-
-export const CDN_URL_REGEX = /(https?:\/\/.*\.(?:png|jpg|gif))/
+import { Commands } from "../../../../../../utils/parameters"
+import { CDN_URL_REGEX } from "../../../../../../utils/constants"
 
 export const COMMAND_NAME = "one"
-
-export interface CommandArgs {
-    url: string
-    name: string
-    type?: 'emoji' | 'url'
-}
 
 export class CreateOneEmojiCommand extends BaseSubCommand {
     name = COMMAND_NAME
@@ -38,14 +29,14 @@ export class CreateOneEmojiCommand extends BaseSubCommand {
 
     // TODO: add a value for the option
 
-    async onBeforeRun(_context: Interaction.InteractionContext, args: CommandArgs) {
+    async onBeforeRun(context: InteractionContext, args: Commands.Emoji.arguments.createOne) {
         if (CDN_URL_REGEX.test(args.url)) args.type = 'url'
-        if (Utils.regex('EMOJI', args.url).matches.length) args.type = 'emoji'
+        if (regex('EMOJI', args.url).matches.length) args.type = 'emoji'
 
         return !!args.type && (args.type === 'url' ? !!args.name : true)
     }
 
-    async onCancelRun(context: Interaction.InteractionContext, args: CommandArgs) {
+    async onCancelRun(context: InteractionContext, args: Commands.Emoji.arguments.createOne) {
         const error = args.type
             ? (args.type === 'url' && !args.name)
                 ? 'URL, pero sin nombre'
@@ -59,36 +50,11 @@ export class CreateOneEmojiCommand extends BaseSubCommand {
         )
     }
 
-    onError(context: Interaction.InteractionContext) {
+    onError(context: InteractionContext) {
         return this.safeReply(context, `Error al crear el emoji, asegurate que haya espacio para más y que no sea demasiado largo el archivo.`)
     }
 
-    async run(context: Interaction.InteractionContext, args: CommandArgs) {
-        await context.respond(InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE)
-
-        if (args.type === 'emoji') {
-            const { matches } = Utils.regex('EMOJI', args.url)
-
-            if (matches.length) {
-                for (const { name, animated, id } of matches) {
-                    const format = (animated) ? 'gif' : 'png'
-                    if (!args.name) args.name = name ?? 'unknown'
-                    args.url = Endpoints.CDN.URL + Endpoints.CDN.EMOJI(id, format) + `?size=${animated ? 80 : 160}`
-                }
-            }
-        }
-
-        const image = await fetch(args.url)
-            .then((res) => res.arrayBuffer())
-            .catch(() => []) as Buffer
-
-        if (!image.length) return this.safeReply(context, `URL inválida.`, true)
-
-        const emoji = await context.guild?.createEmoji({
-            name: parseEmojiName(args.name),
-            image
-        })
-
-        return this.safeReply(context, `Emoji creado: ${emoji}`)
+    async run(context: InteractionContext, args: Commands.Emoji.arguments.createOne) {
+        return Commands.Emoji.createOne(context, args)
     }
 }
