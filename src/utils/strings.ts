@@ -24,7 +24,7 @@ export function parseSubCommands(
 ): string[] | string {
     const names = []
 
-    if (!options && command) return "/" + command
+    if ((!options || options.every((command) => ![1, 2].includes(command.type))) && command) return "/" + command
 
     for (const option of options!) {
 
