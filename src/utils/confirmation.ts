@@ -6,6 +6,7 @@ import {
 } from "detritus-client/lib/constants"
 import { MessageComponentActionRow, MessageComponentSelectMenu } from "detritus-client/lib/structures"
 import { BaseCollection } from "detritus-utils"
+import logger from "../logger"
 
 export type OnCallback = (context: Utils.ComponentContext) => Promise<any>
 
@@ -51,7 +52,7 @@ export class Confirmation {
         this.row = new Utils.Components({
             timeout: this.timeout,
             onTimeout: this.onTimeout,
-            onError: console.error,
+            onError: logger.error,
         }).createActionRow()
     }
 
@@ -68,7 +69,7 @@ export class Confirmation {
 
                 return this.onConfirm(context)
             },
-            onError: console.error
+            onError: logger.error
         },
         {
             label: 'No',
@@ -82,7 +83,7 @@ export class Confirmation {
 
                 return this.onCancel(context)
             },
-            onError: console.error
+            onError: logger.error
         }].forEach((button) => this.row.addButton(button))
 
         return this.row

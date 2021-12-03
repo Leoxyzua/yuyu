@@ -5,6 +5,7 @@ import {
     MessageComponentButtonStyles
 } from "detritus-client/lib/constants"
 import { Message } from "detritus-client/lib/structures"
+import logger from "../logger"
 import { Succes, Warning } from "./icons"
 
 export type OnPage = (page: number, pageObject?: any[]) => Promise<Utils.Embed | Utils.Embed[]> | Utils.Embed | Utils.Embed[]
@@ -77,7 +78,7 @@ export default class Paginator implements Options {
             : this.baseArray?.length
 
         context.client.subscribe('messageCreate', (payload) => this.onMessage(payload))
-        console.log(`Paginator started by ${context.user.tag} in channel ${context.channel?.name}`)
+        logger.debug(`Paginator started by ${context.user.tag} in channel ${context.channel?.name}`)
     }
 
     async cancel() {
@@ -93,7 +94,7 @@ export default class Paginator implements Options {
     get components() {
         const row = new Utils.Components({
             run: this.updatePage.bind(this),
-            onError: console.log,
+            onError: logger.error,
             timeout: this.timeout,
             onTimeout: this.cancel.bind(this)
         })
@@ -199,7 +200,7 @@ export default class Paginator implements Options {
         })
 
         await context.respond(InteractionCallbackTypes.DEFERRED_UPDATE_MESSAGE)
-            .catch(() => console.info(`Unable to respond interaction in paginator of ${context.user.tag} in #${context.channel?.name}`))
+            .catch(() => logger.warn(`Unable to respond interaction in paginator of ${context.user.tag} in #${context.channel?.name}`))
 
         switch (context.customId) {
             case EmojiNames.PREVIOUS:

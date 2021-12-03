@@ -12,8 +12,9 @@
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
+    "@dimensional-fun/logger": "^1.0.1",
     "@types/ms": "^0.7.31",
-    "detritus-client": "0.16.4-beta.6",
+    "detritus-client": "^0.16.4-beta.6",
     "dotenv": "^10.0.0",
     "fumo-api": "Leoxyzua/fumo-api#master",
     "jimp": "^0.16.1",

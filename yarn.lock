@@ -21,6 +21,15 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
+"@dimensional-fun/logger@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@dimensional-fun/logger/-/logger-1.0.1.tgz#1c9bbb3a7a687137f372c773eb4a2687f008b9e2"
+  integrity sha512-COuvFTNuM9mkQ96ZnMe0q6Vr/+D5AYqwX8dZJIbobMX3YGC+gK4FPmEtCWLLuLbUi9qZI/psGStl4O3ydv9amA==
+  dependencies:
+    ansi-styles "^4.2.1"
+    color-convert "^2.0.1"
+    fecha "^4.2.0"
+
 "@eslint/eslintrc@^1.0.4":
   version "1.0.4"
   resolved "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-1.0.4.tgz"
@@ -534,7 +543,7 @@ ansi-regex@^5.0.1:
   resolved "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz"
   integrity sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==
 
-ansi-styles@^4.1.0:
+ansi-styles@^4.1.0, ansi-styles@^4.2.1:
   version "4.3.0"
   resolved "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz"
   integrity sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==
@@ -716,7 +725,7 @@ detritus-client-socket@^0.8.4-beta.1:
     detritus-utils "^0.4.0"
     ws "^7.4.6"
 
-detritus-client@0.16.4-beta.6:
+detritus-client@^0.16.4-beta.6:
   version "0.16.4-beta.6"
   resolved "https://registry.yarnpkg.com/detritus-client/-/detritus-client-0.16.4-beta.6.tgz#83da13c52afb329a5a1ca5b67cacb238ed845fa6"
   integrity sha512-a3RxhwmL5mEFNiIIq4aHa98m6qWbTFDqrg4J5SFlZtRWNMoyU+KGQrasY60Un1r8hLPJ5OexRGiv7cv5tR5ahw==
@@ -933,6 +942,11 @@ fastq@^1.6.0:
   integrity sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==
   dependencies:
     reusify "^1.0.4"
+
+fecha@^4.2.0:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/fecha/-/fecha-4.2.1.tgz#0a83ad8f86ef62a091e22bb5a039cd03d23eecce"
+  integrity sha512-MMMQ0ludy/nBs1/o0zVOiKTpG7qMbonKUzjJgQFEuvq6INZ1OraKPRAWkBq5vlKLOUMpmNYG1JoN3oDPUQ9m3Q==
 
 fetch-blob@^3.1.2:
   version "3.1.3"

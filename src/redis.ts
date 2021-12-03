@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { createClient, RedisClient } from 'redis'
 import { promisify } from 'util'
+import logger from './logger'
 
 class Client {
     url: string
@@ -13,17 +14,17 @@ class Client {
         this.connected = this.client.connected
 
         this.client
-            .on('ready', () => console.log('Redis client ready'))
+            .on('ready', () => logger.info('Redis client ready'))
             .on('error', (error) => {
                 if (error.message.includes('connect ECONNREFUSED')) {
                     this.connected = false
                 }
 
-                if (this.connected) console.error(error)
+                if (this.connected) logger.error(error)
             })
             .on('reconnecting', ({ attempt }) => {
                 if (attempt === 1) {
-                    console.log('Reconnecting redis...')
+                    logger.warn('Reconnecting redis...')
                 } else {
                     this.client.quit()
                     this.connected = false

@@ -66,3 +66,7 @@ export function findCommands(context: InteractionAutoCompleteContext) {
 
     return context.respond({ choices: choices.slice(0, 25) })
 }
+
+export function findHTTPCode(context: InteractionAutoCompleteContext) {
+    // todo
+}

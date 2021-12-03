@@ -10,9 +10,11 @@ import { PermissionUnRaw, Servers, TestServers } from "../../utils/constants"
 import { Warning, Error } from "../../utils/icons"
 import { inspect } from 'util'
 import { safeReply } from "../../utils/tools"
+import { Logger } from "@dimensional-fun/logger"
 const { bold, codeblock } = Utils.Markup
 
 export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommand<ParsedArgsFinished> {
+    public logger = new Logger("commands")
     safeReply(
         context: Interaction.InteractionContext | Utils.ComponentContext,
         content: InteractionEditOrRespond | string = {},
@@ -22,12 +24,12 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
     }
 
     onRunError(context: Interaction.InteractionContext, _args: unknown, error: any) {
-        if (error.raw && error.response) console.error(`Error in the command ${this.name}`, inspect(error.raw, { depth: 7 }))
-        else console.error(error)
+        if (error.raw && error.response) this.logger.error(inspect(error.raw, { depth: 7 }))
+        else this.logger.error(error)
 
         return this.safeReply(
             context,
-            `${Error} Ocurrió un error al ejecutar este comando:\n${codeblock(error.toString())}`,
+            codeblock(error.toString()),
             true
         )
     }
@@ -125,7 +127,7 @@ export class BaseContextMenuMessageCommand extends BaseCommand<ContextMenuMessag
     type = ApplicationCommandTypes.MESSAGE
     triggerLoadingAfter = 1000
     triggerLoadingAsEphemeral = true
-    metadata = { category: 'context-menu ' }
+    metadata = { category: 'context-menu' }
 }
 
 export interface ContextMenuUserArgs {
@@ -137,5 +139,5 @@ export class BaseContextMenuUserCommand extends BaseCommand<ContextMenuUserArgs>
     type = ApplicationCommandTypes.USER
     triggerLoadingAfter = 1000
     triggerLoadingAsEphemeral = true
-    metadata = { category: 'context-menu ' }
+    metadata = { category: 'context-menu' }
 }

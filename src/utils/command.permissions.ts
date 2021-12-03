@@ -1,6 +1,7 @@
 import { ShardClient } from "detritus-client"
 import { RequestTypes } from 'detritus-client-rest'
 import { inspect } from 'util'
+import logger from "../logger"
 
 export function removeElement(array: any[], target: any) {
     return array.filter(element => {
@@ -73,7 +74,7 @@ async function handlePermissions(client: ShardClient) {
             data
         ).catch((error) => {
             if (error.errors?.['0']?._errors?.[0]?.code === 'APPLICATION_COMMANDS_INVALID_ID') return
-            console.error(inspect(error, { depth: 8 }))
+            logger.error(inspect(error, { depth: 8 }))
         })
     }
 

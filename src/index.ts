@@ -6,9 +6,10 @@ import {
 import { ActivityTypes } from 'detritus-client/lib/constants'
 import { GatewayIntents } from 'detritus-client-socket/lib/constants'
 import { inspect } from 'util'
+import logger from './logger'
 
 import './database'
-import './utils/detritus.esm'
+import './utils/detritus.extensions'
 
 import handlers from './handlers'
 import handlePermissions from './utils/command.permissions'
@@ -60,7 +61,7 @@ try {
     await messageClient.addMultipleIn('src/commands/message')
     await messageClient.run()
 } catch (error: any) {
-    console.error('Something went wrong with the clients', error.raw?.errors ? inspect(error.raw.errors, { depth: 7 }) : error)
+    logger.error('Something went wrong with the clients', error.raw?.errors ? inspect(error.raw.errors, { depth: 7 }) : error)
 }
 
-console.log(`Logged in as ${client.user!.tag}, with ${interactionClient.commands.size} [/] commands and a shard count of ${client.shardCount} in ${client.guilds.size} guilds.`)
+logger.info(`Logged in as ${client.user!.tag}, with ${interactionClient.commands.size} [/] commands and a shard count of ${client.shardCount} in ${client.guilds.size} guilds.`)

@@ -6,7 +6,7 @@ import {
     Markup
 } from "detritus-client/lib/utils"
 import { MessageComponentButtonStyles } from "detritus-client/lib/constants"
-import { FumoClient, FumoData } from "fumo-api"
+import api from "fumo-api"
 import {
     Colors,
     YOUTUBE_VIDEO_URL_REGEX,
@@ -18,7 +18,7 @@ import redditFetch from "../../reddit.fetch"
 import { safeReply } from "../../tools"
 import { UpdateIcon } from "../../icons"
 
-export const fumoClient = new FumoClient()
+export const fumoClient = new api.FumoClient()
 
 export interface Field {
     text: string
@@ -27,12 +27,12 @@ export interface Field {
 
 export namespace argumentsBefore {
     export interface get {
-        fumo: FumoData | false
+        fumo: api.FumoData | false
     }
 }
 export namespace arguments {
     export interface get {
-        fumo: FumoData
+        fumo: api.FumoData
     }
 
     export interface reddit {
@@ -54,7 +54,7 @@ export function list(context: InteractionContext) {
             const pages = Math.ceil(list.length / 4)
             return `Página ${Markup.bold(page + "/" + pages)}`
         },
-        onPage: (_page, fumos?: FumoData[]) => {
+        onPage: (_page, fumos?: api.FumoData[]) => {
             const fields: Field[] = []
 
             if (fumos) {

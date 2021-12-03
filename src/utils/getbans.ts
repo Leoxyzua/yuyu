@@ -1,5 +1,6 @@
 import { RestResponses } from "detritus-client/lib/rest/types"
 import { Guild, User } from "detritus-client/lib/structures"
+import logger from "../logger"
 import redis from "../redis"
 
 export default async function getBans(guild: Guild): Promise<RestResponses.FetchGuildBans> {
@@ -16,7 +17,7 @@ export default async function getBans(guild: Guild): Promise<RestResponses.Fetch
 
 export async function fetchBans(guild: Guild) {
     const bans = await guild.fetchBans().then((bans) => {
-        console.log(`Fetching guild bans in ${guild.name} [${guild.id}]`)
+        logger.debug(`Fetching guild bans in ${guild.name} [${guild.id}]`)
 
         if (bans.length) {
             redis.set(`bans-${guild.id}`, JSON.stringify(bans.toJSON()))
