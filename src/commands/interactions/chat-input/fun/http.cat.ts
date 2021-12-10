@@ -13,7 +13,7 @@ export default class HTTPCatCommand extends BaseCommand {
         super({
             options: [{
                 name: 'code',
-                description: 'El código HTTP.',
+                description: 'El código HTTP',
                 type: ApplicationCommandOptionTypes.INTEGER,
                 required: true
             }],

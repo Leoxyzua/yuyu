@@ -50,7 +50,7 @@ export default class BanCommands extends BaseCommand {
     public onCancelRun(context: InteractionContext) {
         return this.safeReply(
             context,
-            `${Warning} El usuario mencionado no es un miembro válido o yo/tu no pued(e/o) manejar el rol.`,
+            `${Warning} El usuario mencionado no es un miembro válido o yo/tu no pued(es/o) manejar el rol.`,
             true
         )
     }
