@@ -57,6 +57,5 @@ export default class BanCommands extends BaseCommand {
 
     public async run(context: InteractionContext, args: Commands.Role.arguments) {
         return Commands.Role.response(context, args)
-
     }
 }
