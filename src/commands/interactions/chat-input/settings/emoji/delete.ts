@@ -5,10 +5,10 @@ import { BaseSubCommand } from "../../../basecommand"
 export const COMMAND_NAME = 'delete'
 
 export class DeleteEmojiCommand extends BaseSubCommand {
-    name = COMMAND_NAME
-    description = "Borra un emoji del servidor."
+    public name = COMMAND_NAME
+    public description = "Borra un emoji del servidor."
 
-    constructor() {
+    public constructor() {
         super({
             options: [{
                 name: 'emoji',
@@ -20,17 +20,17 @@ export class DeleteEmojiCommand extends BaseSubCommand {
         })
     }
 
-    onBeforeRun(_context: InteractionContext, args: Commands.Emoji.argumentsBefore._delete) {
+    public onBeforeRun(_context: InteractionContext, args: Commands.Emoji.argumentsBefore._delete) {
         return !!args.emojis
     }
 
-    onCancelRun(context: InteractionContext, args: Commands.Emoji.argumentsBefore._delete) {
+    public onCancelRun(context: InteractionContext, args: Commands.Emoji.argumentsBefore._delete) {
         if (args.emojis === false) {
             return this.safeReply(context, `No pude encontrar ningun emoji.`, true)
         }
     }
 
-    async run(context: InteractionContext, args: Commands.Emoji.arguments._delete) {
+    public async run(context: InteractionContext, args: Commands.Emoji.arguments._delete) {
         return Commands.Emoji._delete(context, args)
     }
 }

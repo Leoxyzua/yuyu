@@ -6,10 +6,10 @@ import { BaseSubCommand } from "../../../basecommand"
 export const COMMAND_NAME = "random"
 
 export class FumoRandomCommand extends BaseSubCommand {
-    name = COMMAND_NAME
-    description = "Obten un fumo aleatorio de la Fumo Api"
+    public name = COMMAND_NAME
+    public description = "Obten un fumo aleatorio de la Fumo Api"
 
-    run(context: InteractionContext | ComponentContext) {
+    public run(context: InteractionContext | ComponentContext) {
         return Commands.Fumo.random(context)
     }
 }

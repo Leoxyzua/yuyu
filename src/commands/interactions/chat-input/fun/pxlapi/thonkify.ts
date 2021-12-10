@@ -9,10 +9,10 @@ export interface CommandArgs {
 export const COMMAND_NAME = "thonkify"
 
 export default class GlitchCommand extends BaseCommand {
-    name = COMMAND_NAME
-    description = "atest"
+    public name = COMMAND_NAME
+    public description = "Convierte un texto en 'thonks'"
 
-    constructor() {
+    public constructor() {
         super({
             options: [{
                 name: 'text',
@@ -22,7 +22,7 @@ export default class GlitchCommand extends BaseCommand {
         })
     }
 
-    async run(context: InteractionContext, args: CommandArgs) {
+    public async run(context: InteractionContext, args: CommandArgs) {
         const buffer = await client.thonkify(args.text)
 
         return this.safeReply(context, { file: { value: buffer, filename: 'thonkify.png' } })

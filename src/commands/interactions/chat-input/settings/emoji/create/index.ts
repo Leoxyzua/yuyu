@@ -6,10 +6,10 @@ import { CreateOneEmojiCommand } from "./one"
 export const COMMAND_NAME = "create"
 
 export class CreateEmojiCommands extends BaseSubCommandGroup {
-    name = COMMAND_NAME
-    description = '.'
+    public name = COMMAND_NAME
+    public description = '.'
 
-    constructor() {
+    public constructor() {
         super({
             options: [
                 new CreateOneEmojiCommand(),

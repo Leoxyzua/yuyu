@@ -5,10 +5,10 @@ import { Commands } from "../../../../../utils/parameters"
 export const COMMAND_NAME = "list"
 
 export class EmojiListCommand extends BaseSubCommand {
-    name = COMMAND_NAME
-    description = "Lista de todos los emojis en el servidor"
+    public name = COMMAND_NAME
+    public description = "Lista de todos los emojis en el servidor"
 
-    constructor() {
+    public constructor() {
         super({
             options: [{
                 name: "filter",
@@ -32,7 +32,7 @@ export class EmojiListCommand extends BaseSubCommand {
         })
     }
 
-    async run(context: InteractionContext, args: Commands.Emoji.arguments.list) {
+    public async run(context: InteractionContext, args: Commands.Emoji.arguments.list) {
         return Commands.Emoji.list(context, args)
     }
 }

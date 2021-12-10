@@ -5,16 +5,16 @@ import { BaseCommand } from "../../basecommand"
 export const COMMAND_NAME = "me"
 
 export default class BotInfoCommand extends BaseCommand {
-    name = COMMAND_NAME
-    description = "Sobre mí"
+    public name = COMMAND_NAME
+    public description = "Sobre mí"
 
-    constructor() {
+    public constructor() {
         super({
             metadata: { category: 'info' }
         })
     }
 
-    async run(context: InteractionContext) {
+    public async run(context: InteractionContext) {
         return Commands.botInfo(context)
     }
 }

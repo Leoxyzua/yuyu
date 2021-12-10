@@ -2,7 +2,7 @@ import { BaseSRACommand } from "."
 import { SomeRandomApiEndpoints } from "../../../../../utils/constants"
 
 export default class KoalaAnimalCommand extends BaseSRACommand {
-    constructor() {
+    public constructor() {
         super(SomeRandomApiEndpoints.ANIMAL_KOALA, "de un koala 🐨")
     }
 }

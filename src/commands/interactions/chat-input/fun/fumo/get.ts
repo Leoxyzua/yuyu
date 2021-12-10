@@ -6,10 +6,10 @@ import { Error } from "../../../../../utils/icons"
 export const COMMAND_NAME = "get"
 
 export class FumoGetCommand extends BaseSubCommand {
-    name = COMMAND_NAME
-    description = "Obten un fumo de la Fumo Api mediante su ID."
+    public name = COMMAND_NAME
+    public description = "Obten un fumo de la Fumo Api mediante su ID."
 
-    constructor() {
+    public constructor() {
         super({
             options: [{
                 name: 'id',
@@ -21,11 +21,11 @@ export class FumoGetCommand extends BaseSubCommand {
         })
     }
 
-    onBeforeRun(context: InteractionContext, args: Commands.Fumo.arguments.get) {
+    public onBeforeRun(context: InteractionContext, args: Commands.Fumo.arguments.get) {
         return !!args.fumo
     }
 
-    onCancelRun(context: InteractionContext) {
+    public onCancelRun(context: InteractionContext) {
         return this.safeReply(
             context,
             `${Error} Fumo no encontrado, asegurate de haber ingresado una ID válida.`,
@@ -33,7 +33,7 @@ export class FumoGetCommand extends BaseSubCommand {
         )
     }
 
-    run(context: InteractionContext, args: Commands.Fumo.arguments.get) {
+    public run(context: InteractionContext, args: Commands.Fumo.arguments.get) {
         return Commands.Fumo.get(context, args)
     }
 }

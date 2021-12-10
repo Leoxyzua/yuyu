@@ -7,10 +7,10 @@ import { Commands } from "../../../../../utils/parameters"
 export const COMMAND_NAME = "create"
 
 export class CreateBanCommand extends BaseSubCommand {
-    name = COMMAND_NAME
-    description = "Banea a un miembro del servidor."
+    public name = COMMAND_NAME
+    public description = "Banea a un miembro del servidor."
 
-    constructor() {
+    public constructor() {
         super({
             options: [
                 {
@@ -33,7 +33,7 @@ export class CreateBanCommand extends BaseSubCommand {
         })
     }
 
-    onBeforeRun(context: InteractionContext, { target }: Commands.Ban.arguments.create) {
+    public onBeforeRun(context: InteractionContext, { target }: Commands.Ban.arguments.create) {
         if (!context.guild || !context.me) return false
         if (!context.guild.members.has(target.id)) return true
         if (target instanceof Member && target.highestRole?.position! > context.member?.highestRole?.position!) return false
@@ -41,11 +41,11 @@ export class CreateBanCommand extends BaseSubCommand {
         return context.me.canEdit(target as any) && (context.me.id !== target.id) && (target.id !== context.user.id)
     }
 
-    onCancelRun(context: InteractionContext, args: Commands.Ban.arguments.create) {
+    public onCancelRun(context: InteractionContext, args: Commands.Ban.arguments.create) {
         return this.safeReply(context, `${args.target.mention} no puede ser baneado.`, true)
     }
 
-    async run(context: InteractionContext, args: Commands.Ban.arguments.create) {
+    public async run(context: InteractionContext, args: Commands.Ban.arguments.create) {
         return Commands.Ban.create(context, args)
     }
 }

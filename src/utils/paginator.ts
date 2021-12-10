@@ -37,23 +37,23 @@ export interface Options {
 }
 
 export default class Paginator implements Options {
-    context: Interaction.InteractionContext
-    content?: Content
-    onPage: OnPage
-    baseArray?: any[] = []
-    objectsPerPage?: number
-    timeout?= 1000 * 60
-    page = 1
-    lastPage?: number
-    pageObject = 0
-    jump: {
+    public context: Interaction.InteractionContext
+    public content?: Content
+    public onPage: OnPage
+    public baseArray?: any[] = []
+    public objectsPerPage?: number
+    public timeout?= 1000 * 60
+    public page = 1
+    public lastPage?: number
+    public pageObject = 0
+    public jump: {
         message?: Message | null,
         active: boolean
     } = {
             active: false
         }
 
-    constructor(context: Interaction.InteractionContext, options: Options) {
+    public constructor(context: Interaction.InteractionContext, options: Options) {
         this.context = context
         this.onPage = options.onPage
 
@@ -81,7 +81,7 @@ export default class Paginator implements Options {
         logger.debug(`Paginator started by ${context.user.tag} in channel ${context.channel?.name}`)
     }
 
-    async cancel() {
+    public async cancel() {
         const { embed, content, embeds } = await this.currentPage()
         await this.context.editOrRespond({
             embed,
@@ -91,7 +91,7 @@ export default class Paginator implements Options {
         })
     }
 
-    get components() {
+    public get components() {
         const row = new Utils.Components({
             run: this.updatePage.bind(this),
             onError: logger.error,
@@ -128,7 +128,7 @@ export default class Paginator implements Options {
         return row
     }
 
-    async currentPage() {
+    public async currentPage() {
         const pageObject = this.baseArray?.slice(this.pageObject, this.pageObject + this.objectsPerPage!)
         const embed = await this.onPage(this.page, pageObject)
         const content = this.content?.(this.page, pageObject)
@@ -140,14 +140,14 @@ export default class Paginator implements Options {
         }
     }
 
-    setPage(page: number, pageObject?: number) {
+    public setPage(page: number, pageObject?: number) {
         this.page = page
         if (this.objectsPerPage && typeof pageObject === 'number')
             this.pageObject = pageObject
 
     }
 
-    async createMessage() {
+    public async createMessage() {
         const { embed, embeds, content } = await this.currentPage()
 
         return this.context.editOrRespond({
@@ -158,7 +158,7 @@ export default class Paginator implements Options {
         })
     }
 
-    async onMessage({ message }: GatewayClientEvents.MessageCreate) {
+    public async onMessage({ message }: GatewayClientEvents.MessageCreate) {
         if (
             message.fromBot ||
             message.author.id !== this.context.userId ||
@@ -174,7 +174,7 @@ export default class Paginator implements Options {
         await this.createMessage()
     }
 
-    async throwInvalidPage() {
+    public async throwInvalidPage() {
         if (!this.jump.message) return
 
         await this.context.editMessage(this.jump.message.id, {
@@ -182,7 +182,7 @@ export default class Paginator implements Options {
         })
     }
 
-    async clearMessage(content = `${Succes} Cancelado.`) {
+    public async clearMessage(content = `${Succes} Cancelado.`) {
         if (!this.jump.message) return
 
         await this.context.editMessage(this.jump.message.id, {
@@ -193,7 +193,7 @@ export default class Paginator implements Options {
         this.jump.message = null
     }
 
-    async updatePage(context: Utils.ComponentContext) {
+    public async updatePage(context: Utils.ComponentContext) {
         if (context.userId !== this.context.userId) return context.createMessage({
             content: 'No puedes usar esto.',
             flags: MessageFlags.EPHEMERAL

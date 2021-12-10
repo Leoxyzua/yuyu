@@ -9,11 +9,11 @@ import { GuildBanAdd, ThreadUpdate } from "./gateway"
 process.on('unhandledRejection', logger.error)
 process.emitWarning = (warning, arg: any, ...rest: any[]) => {
     if (arg === 'ExperimentalWarning') {
-        return;
+        return
     }
 
-    return emitWarning(warning, arg, ...rest);
-};
+    return emitWarning(warning, arg, ...rest)
+}
 
 export default function (client: ShardClient, commandClient: InteractionCommandClient) {
     commandClient.subscribe(ClientEvents.COMMAND_RAN, CommandRan)

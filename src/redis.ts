@@ -4,11 +4,11 @@ import { promisify } from 'util'
 import logger from './logger'
 
 class Client {
-    url: string
-    client: RedisClient
-    connected: boolean
+    public url: string
+    public client: RedisClient
+    public connected: boolean
 
-    constructor(url: string) {
+    public constructor(url: string) {
         this.url = url
         this.client = createClient(url)
         this.connected = this.client.connected
@@ -33,18 +33,18 @@ class Client {
             })
     }
 
-    set(key: string, value: any, timeout?: number): Promise<string> {
+    public set(key: string, value: any, timeout?: number): Promise<string> {
         if (typeof value === 'object') value = JSON.stringify(value)
         if (this.client instanceof Poor) return this.client.set(key, value)
         return promisify(this.client.set).bind(this.client)(key, value, 'EX', timeout ?? (3 * 100))
     }
 
-    get(key: string): Promise<string> {
+    public get(key: string): Promise<string> {
         if (this.client instanceof Poor) return this.client.get(key)
         return promisify(this.client.get).bind(this.client)(key)
     }
 
-    delete(key: string): Promise<number> {
+    public delete(key: string): Promise<number> {
         if (this.client instanceof Poor) return this.client.delete(key)
         return promisify(this.client.del).bind(this.client)(key)
     }
@@ -52,18 +52,18 @@ class Client {
 
 // XD
 export class Poor {
-    cache: Record<string, unknown> = {}
+    public cache: Record<string, unknown> = {}
 
-    set(key: string, value: any): string {
+    public set(key: string, value: any): string {
         this.cache[key] = value
         return key
     }
 
-    get(key: string): string | undefined {
+    public get(key: string): string | undefined {
         return this.cache[key]
     }
 
-    delete(key: string) {
+    public delete(key: string) {
         this.cache[key] = null
         delete this.cache[key]
     }

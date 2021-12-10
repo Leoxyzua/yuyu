@@ -5,16 +5,16 @@ import { BaseCommand } from "../basecommand"
 export const COMMAND_NAME = 'ping'
 
 export default class PingCommand extends BaseCommand<unknown> {
-    name = COMMAND_NAME
-    description = "Pong!"
+    public name = COMMAND_NAME
+    public description = "Pong!"
 
-    constructor() {
+    public constructor() {
         super({
             metadata: { category: 'misc' }
         })
     }
 
-    async run(context: Interaction.InteractionContext) {
+    public async run(context: Interaction.InteractionContext) {
         return Commands.ping(context)
     }
 }

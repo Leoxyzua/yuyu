@@ -25,10 +25,10 @@ export async function sraRequest(context: InteractionContext, path: string) {
 }
 
 export class BaseSRACommand extends BaseCommand {
-    path: string
-    sub: string
+    public path: string
+    public sub: string
 
-    constructor(path: string, sub: `de ${string}`) {
+    public constructor(path: string, sub: `de ${string}`) {
         super({
             name: path.split('/')[2].replace('_', '-'),
             description: `Obten una imagen aleatoria ${sub}`,
@@ -43,7 +43,7 @@ export class BaseSRACommand extends BaseCommand {
         this.path = path
     }
 
-    async run(context: InteractionContext, args: CommandArgs) {
+    public async run(context: InteractionContext, args: CommandArgs) {
         const data = await sraRequest(context, this.path) as requestData
         const embed = new Embed()
             .setImage(data.image)

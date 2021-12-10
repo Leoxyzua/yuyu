@@ -6,10 +6,10 @@ import { Error } from "../../../../../utils/icons"
 export const COMMAND_NAME = "remove"
 
 export class RemoveBanCommand extends BaseSubCommand {
-    name = COMMAND_NAME
-    description = "Des-banea a un miembro anteriormente baneado."
+    public name = COMMAND_NAME
+    public description = "Des-banea a un miembro anteriormente baneado."
 
-    constructor() {
+    public constructor() {
         super({
             options: [{
                 name: "member",
@@ -22,15 +22,15 @@ export class RemoveBanCommand extends BaseSubCommand {
         })
     }
 
-    onBeforeRun(context: InteractionContext, args: Commands.Ban.argumentsBefore.remove) {
+    public onBeforeRun(context: InteractionContext, args: Commands.Ban.argumentsBefore.remove) {
         return !!args.target
     }
 
-    onCancelRun(context: InteractionContext) {
+    public onCancelRun(context: InteractionContext) {
         return this.safeReply(context, `${Error} Ese no es un miembro válido.`, true)
     }
 
-    async run(context: InteractionContext, args: Commands.Ban.arguments.remove) {
+    public async run(context: InteractionContext, args: Commands.Ban.arguments.remove) {
         return Commands.Ban.remove(context, args)
     }
 }

@@ -11,10 +11,10 @@ export function parseEmojiName(str: string) {
 }
 
 export default class EmojiCommands extends BaseCommand {
-    name = COMMAND_NAME
-    description = "."
+    public name = COMMAND_NAME
+    public description = "."
 
-    constructor() {
+    public constructor() {
         super({
             metadata: { category: 'settings' },
             options: [
@@ -25,5 +25,5 @@ export default class EmojiCommands extends BaseCommand {
         })
     }
 
-    permissions = [Permissions.MANAGE_EMOJIS]
+    public permissions = [Permissions.MANAGE_EMOJIS]
 }

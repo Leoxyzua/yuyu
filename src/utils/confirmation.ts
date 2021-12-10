@@ -32,16 +32,16 @@ export function disableButtons(row: BaseCollection<number, MessageComponentActio
 }
 
 export class Confirmation {
-    readonly row: Utils.ComponentActionRow
+    public readonly row: Utils.ComponentActionRow
 
-    context: Interaction.InteractionContext
-    onConfirm: OnCallback
-    onCancel: OnCallback
+    public context: Interaction.InteractionContext
+    public onConfirm: OnCallback
+    public onCancel: OnCallback
 
-    onTimeout?: Utils.ComponentOnTimeout
-    timeout?: number
+    public onTimeout?: Utils.ComponentOnTimeout
+    public timeout?: number
 
-    constructor(context: Interaction.InteractionContext, options: ConfirmationOptions) {
+    public constructor(context: Interaction.InteractionContext, options: ConfirmationOptions) {
         this.context = context
         this.onConfirm = options.onConfirm
         this.onCancel = options.onCancel
@@ -56,7 +56,7 @@ export class Confirmation {
         }).createActionRow()
     }
 
-    start() {
+    public start() {
         [{
             label: 'Yes',
             style: MessageComponentButtonStyles.SUCCESS,

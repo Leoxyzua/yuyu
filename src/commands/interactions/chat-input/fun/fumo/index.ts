@@ -8,10 +8,10 @@ import { FumoRedditCommand } from "./reddit"
 export const COMMAND_NAME = "fumo"
 
 export default class FumoCommands extends BaseCommand {
-    name = COMMAND_NAME
-    description = "."
+    public name = COMMAND_NAME
+    public description = "."
 
-    constructor() {
+    public constructor() {
         super({
             options: [
                 new FumoGetCommand(),

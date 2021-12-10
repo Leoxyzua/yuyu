@@ -6,10 +6,10 @@ import { BaseCommand } from "../../basecommand"
 export const COMMAND_NAME = 'unarchive-all'
 
 export default class UnarchiveAllThreadsCommand extends BaseCommand {
-    name = COMMAND_NAME
-    description = 'Des-archiva todos los hilos archivados.'
+    public name = COMMAND_NAME
+    public description = 'Des-archiva todos los hilos archivados.'
 
-    constructor() {
+    public constructor() {
         super({
             metadata: { category: 'settings' },
             ratelimits: [{
@@ -20,13 +20,13 @@ export default class UnarchiveAllThreadsCommand extends BaseCommand {
         })
     }
 
-    permissions = [
+    public permissions = [
         Permissions.MANAGE_THREADS,
         Permissions.MANAGE_CHANNELS,
         Permissions.MANAGE_GUILD
     ]
 
-    async run(context: InteractionContext) {
+    public async run(context: InteractionContext) {
         return Commands.unarchiveAll(context)
     }
 }

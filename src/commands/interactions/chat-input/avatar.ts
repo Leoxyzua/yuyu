@@ -6,10 +6,10 @@ import { ApplicationCommandOptionTypes } from "detritus-client/lib/constants"
 export const COMMAND_NAME = "avatar"
 
 export default class AvatarCommand extends BaseCommand {
-    name = COMMAND_NAME
+    public name = COMMAND_NAME
     description = "Muestra el avatar de un usuario."
 
-    constructor() {
+    public constructor() {
         super({
             options: [
                 {
@@ -29,7 +29,7 @@ export default class AvatarCommand extends BaseCommand {
         })
     }
 
-    async run(context: InteractionContext, args: Commands.Avatar.arguments) {
+    public async run(context: InteractionContext, args: Commands.Avatar.arguments) {
         return Commands.Avatar.response(context, args)
     }
 }

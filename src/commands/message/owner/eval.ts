@@ -19,7 +19,7 @@ export interface CommandArgs {
 
 // not interested in message commands, but the "activateOnEdits" is hot /shrug
 export default class EvalCommand extends BaseCommand {
-    constructor(client: CommandClient) {
+    public constructor(client: CommandClient) {
         super(client, {
             label: 'code',
             name: COMMAND_NAME,
@@ -45,11 +45,11 @@ export default class EvalCommand extends BaseCommand {
         })
     }
 
-    onBeforeRun(context: Command.Context, args: CommandArgs) {
+    public onBeforeRun(context: Command.Context, args: CommandArgs) {
         return context.user.isClientOwner && !!args.code
     }
 
-    async run(context: Command.Context, { code, exec, async, depth, nodepth }: CommandArgs) {
+    public async run(context: Command.Context, { code, exec, async, depth, nodepth }: CommandArgs) {
         const { matches } = Utils.regex(DiscordRegexNames.TEXT_CODEBLOCK, code)
 
         if (matches.length && matches[0].text) code = matches[0].text

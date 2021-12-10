@@ -15,7 +15,8 @@ const { bold, codeblock } = Utils.Markup
 
 export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommand<ParsedArgsFinished> {
     public logger = new Logger("commands")
-    safeReply(
+
+    public safeReply(
         context: Interaction.InteractionContext | Utils.ComponentContext,
         content: InteractionEditOrRespond | string = {},
         ephemeral?: boolean
@@ -23,7 +24,7 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
         return safeReply(context, content, ephemeral)
     }
 
-    onRunError(context: Interaction.InteractionContext, _args: unknown, error: any) {
+    public onRunError(context: Interaction.InteractionContext, _args: unknown, error: any) {
         if (error.raw && error.response) this.logger.error(inspect(error.raw, { depth: 7 }))
         else this.logger.error(error)
 
@@ -34,11 +35,11 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
         )
     }
 
-    onError(context: Interaction.InteractionContext, _args: unknown, error: any) {
+    public onError(context: Interaction.InteractionContext, _args: unknown, error: any) {
         return this.onRunError(context, _args, error)
     }
 
-    onLoadingTrigger(context: Interaction.InteractionContext) {
+    public onLoadingTrigger(context: Interaction.InteractionContext) {
         if (context.responded) return
 
         return context.respond(InteractionCallbackTypes.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE, {
@@ -46,7 +47,7 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
         })
     }
 
-    async onRatelimit(context: Interaction.InteractionContext, ratelimits: Array<Interaction.CommandRatelimitInfo>,) {
+    public async onRatelimit(context: Interaction.InteractionContext, ratelimits: Array<Interaction.CommandRatelimitInfo>,) {
         for (const { ratelimit, remaining } of ratelimits) {
             const texts: { [key: string]: (seconds: string) => string } = {
                 user: (seconds) => `${Warning} Estas usando comandos demasiado rapido, espera ${bold(seconds)} segundos.`,
@@ -63,7 +64,7 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
         }
     }
 
-    onPermissionsFail(context: Interaction.InteractionContext, failed: Array<bigint>) {
+    public onPermissionsFail(context: Interaction.InteractionContext, failed: Array<bigint>) {
         const permissions: Array<string> = []
         for (const permission of failed) {
             const key = String(permission)
@@ -77,7 +78,7 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
         )
     }
 
-    constructor(data: Interaction.InteractionCommandOptions = {}) {
+    public constructor(data: Interaction.InteractionCommandOptions = {}) {
         super(Object.assign({
             defaultPermission: process.env.mode === 'development' ? !['mod', 'config'].includes(data.metadata?.category) : true,
             guildIds: process.env.mode === 'development' ? Servers : TestServers,
@@ -98,8 +99,8 @@ export class BaseCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends In
 }
 
 export class BaseSubCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
-    type = ApplicationCommandOptionTypes.SUB_COMMAND
-    safeReply(
+    public type = ApplicationCommandOptionTypes.SUB_COMMAND
+    public safeReply(
         context: Interaction.InteractionContext | Utils.ComponentContext,
         content: InteractionEditOrRespond | string = {},
         ephemeral?: boolean
@@ -109,8 +110,8 @@ export class BaseSubCommand<ParsedArgsFinished = Interaction.ParsedArgs> extends
 }
 
 export class BaseSubCommandGroup<ParsedArgsFinished = Interaction.ParsedArgs> extends Interaction.InteractionCommandOption<ParsedArgsFinished> {
-    type = ApplicationCommandOptionTypes.SUB_COMMAND_GROUP
-    safeReply(
+    public type = ApplicationCommandOptionTypes.SUB_COMMAND_GROUP
+    public safeReply(
         context: Interaction.InteractionContext | Utils.ComponentContext,
         content: InteractionEditOrRespond | string = {},
         ephemeral?: boolean
@@ -124,10 +125,10 @@ export interface ContextMenuMessageArgs {
 }
 
 export class BaseContextMenuMessageCommand extends BaseCommand<ContextMenuMessageArgs> {
-    type = ApplicationCommandTypes.MESSAGE
-    triggerLoadingAfter = 1000
-    triggerLoadingAsEphemeral = true
-    metadata = { category: 'context-menu' }
+    public type = ApplicationCommandTypes.MESSAGE
+    public triggerLoadingAfter = 1000
+    public triggerLoadingAsEphemeral = true
+    public metadata = { category: 'context-menu' }
 }
 
 export interface ContextMenuUserArgs {
@@ -136,8 +137,8 @@ export interface ContextMenuUserArgs {
 }
 
 export class BaseContextMenuUserCommand extends BaseCommand<ContextMenuUserArgs> {
-    type = ApplicationCommandTypes.USER
-    triggerLoadingAfter = 1000
-    triggerLoadingAsEphemeral = true
-    metadata = { category: 'context-menu' }
+    public type = ApplicationCommandTypes.USER
+    public triggerLoadingAfter = 1000
+    public triggerLoadingAsEphemeral = true
+    public metadata = { category: 'context-menu' }
 }

@@ -6,11 +6,11 @@ import { BaseSubCommand } from "../../../basecommand"
 export const COMMAND_NAME = "reddit"
 
 export class FumoRedditCommand extends BaseSubCommand {
-    name = COMMAND_NAME
-    description = "Muestra posts de reddit relcionados a los fumos"
-    triggerLoadingAfter = 2000
+    public name = COMMAND_NAME
+    public description = "Muestra posts de reddit relcionados a los fumos"
+    public triggerLoadingAfter = 2000
 
-    constructor() {
+    public constructor() {
         super({
             options: [{
                 name: 'subreddit',
@@ -21,7 +21,7 @@ export class FumoRedditCommand extends BaseSubCommand {
         })
     }
 
-    async run(context: InteractionContext, args: Commands.Fumo.arguments.reddit) {
+    public async run(context: InteractionContext, args: Commands.Fumo.arguments.reddit) {
         return Commands.Fumo.reddit(context, args)
     }
 }

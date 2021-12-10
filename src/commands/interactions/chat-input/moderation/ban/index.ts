@@ -8,10 +8,10 @@ import { RemoveBanCommand } from "./remove"
 export const COMMAND_NAME = "ban"
 
 export default class BanCommands extends BaseCommand {
-    name = COMMAND_NAME
-    description = "."
+    public name = COMMAND_NAME
+    public description = "."
 
-    constructor() {
+    public constructor() {
         super({
             metadata: { category: 'mod' },
             options: [
@@ -21,5 +21,5 @@ export default class BanCommands extends BaseCommand {
         })
     }
 
-    permissions = [Permissions.BAN_MEMBERS]
+    public permissions = [Permissions.BAN_MEMBERS]
 }

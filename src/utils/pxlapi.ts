@@ -26,7 +26,7 @@ export class PxlClient {
     public rest: Client
     public url = "https://api.pxlapi.dev/"
 
-    constructor(token: string, rest: Client) {
+    public constructor(token: string, rest: Client) {
         this.token = token
         this.rest = rest
     }
@@ -55,13 +55,13 @@ export class PxlClient {
         })
     }
 
-    async thonkify(text: string) {
+    public async thonkify(text: string) {
         return this.request('thonkify', {
             text
         })
     }
 
-    async lego(images: string[]) {
+    public async lego(images: string[]) {
         return this.request('lego', {
             images
         })

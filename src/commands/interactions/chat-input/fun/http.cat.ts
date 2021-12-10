@@ -6,10 +6,10 @@ import { BaseCommand } from "../../basecommand"
 export const COMMAND_NAME = "http-cat"
 
 export default class HTTPCatCommand extends BaseCommand {
-    name = COMMAND_NAME
-    description = "Obten una imagen de un gato mediante un código HTTP"
+    public name = COMMAND_NAME
+    public description = "Obten una imagen de un gato mediante un código HTTP"
 
-    constructor() {
+    public constructor() {
         super({
             options: [{
                 name: 'code',
@@ -21,7 +21,7 @@ export default class HTTPCatCommand extends BaseCommand {
         })
     }
 
-    async run(context: InteractionContext, args: Commands.HTTPCat.arguments) {
+    public async run(context: InteractionContext, args: Commands.HTTPCat.arguments) {
         return Commands.HTTPCat.response(context, args)
     }
 }

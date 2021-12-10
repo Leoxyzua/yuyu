@@ -5,10 +5,10 @@ import { client } from "."
 export const COMMAND_NAME = "glitch"
 
 export default class GlitchCommand extends BaseCommand {
-    name = COMMAND_NAME
-    description = "atest"
+    public name = COMMAND_NAME
+    public description = "Añadele un efecto glitch a tu avatar"
 
-    async run(context: InteractionContext) {
+    public async run(context: InteractionContext) {
         const buffer = await client.glitch([context.user.avatarUrl])
 
         return this.safeReply(context, {

@@ -7,10 +7,10 @@ import { CDN_URL_REGEX } from "../../../../../../utils/constants"
 export const COMMAND_NAME = "one"
 
 export class CreateOneEmojiCommand extends BaseSubCommand {
-    name = COMMAND_NAME
-    description = "Añade un emoji al servidor."
+    public name = COMMAND_NAME
+    public description = "Añade un emoji al servidor."
 
-    constructor() {
+    public constructor() {
         super({
             options: [
                 {
@@ -28,15 +28,14 @@ export class CreateOneEmojiCommand extends BaseSubCommand {
     }
 
     // TODO: add a value for the option
-
-    async onBeforeRun(context: InteractionContext, args: Commands.Emoji.arguments.createOne) {
+    public async onBeforeRun(context: InteractionContext, args: Commands.Emoji.arguments.createOne) {
         if (CDN_URL_REGEX.test(args.url)) args.type = 'url'
         if (regex('EMOJI', args.url).matches.length) args.type = 'emoji'
 
         return !!args.type && (args.type === 'url' ? !!args.name : true)
     }
 
-    async onCancelRun(context: InteractionContext, args: Commands.Emoji.arguments.createOne) {
+    public async onCancelRun(context: InteractionContext, args: Commands.Emoji.arguments.createOne) {
         const error = args.type
             ? (args.type === 'url' && !args.name)
                 ? 'URL, pero sin nombre'
@@ -50,11 +49,11 @@ export class CreateOneEmojiCommand extends BaseSubCommand {
         )
     }
 
-    onError(context: InteractionContext) {
+    public onError(context: InteractionContext) {
         return this.safeReply(context, `Error al crear el emoji, asegurate que haya espacio para más y que no sea demasiado largo el archivo.`)
     }
 
-    async run(context: InteractionContext, args: Commands.Emoji.arguments.createOne) {
+    public async run(context: InteractionContext, args: Commands.Emoji.arguments.createOne) {
         return Commands.Emoji.createOne(context, args)
     }
 }

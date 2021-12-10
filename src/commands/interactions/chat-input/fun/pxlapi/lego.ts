@@ -5,11 +5,11 @@ import { client } from "."
 export const COMMAND_NAME = "lego"
 
 export default class GlitchCommand extends BaseCommand {
-    name = COMMAND_NAME
-    description = "atest"
-    triggerLoadingAfter = 2000
+    public name = COMMAND_NAME
+    public description = "Convierte tu avatar en legos"
+    public triggerLoadingAfter = 2000
 
-    async run(context: InteractionContext) {
+    public async run(context: InteractionContext) {
 
         const buffer = await client.lego([context.user.avatarUrl])
 

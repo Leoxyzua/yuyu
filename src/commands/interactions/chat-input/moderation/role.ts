@@ -8,11 +8,11 @@ import { BaseCommand } from "../../basecommand"
 export const COMMAND_NAME = "role"
 
 export default class BanCommands extends BaseCommand {
-    name = COMMAND_NAME
-    description = "Añade o quitale un rol a un miembro."
-    triggerLoadingAfter = 1000
+    public name = COMMAND_NAME
+    public description = "Añade o quitale un rol a un miembro."
+    public triggerLoadingAfter = 1000
 
-    constructor() {
+    public constructor() {
         super({
             options: [
                 {
@@ -38,16 +38,16 @@ export default class BanCommands extends BaseCommand {
         })
     }
 
-    permissions = [Permissions.MANAGE_ROLES]
+    public permissions = [Permissions.MANAGE_ROLES]
 
-    onBeforeRun(context: InteractionContext, args: Commands.Role.argumentsBefore) {
+    public onBeforeRun(context: InteractionContext, args: Commands.Role.argumentsBefore) {
         return (args.member instanceof Member)
             && (args.role.id !== context.guildId)
             && (context.me?.canEditRole(args.role)!)
             && (context.member?.highestRole!.position! > args.role.position)
     }
 
-    onCancelRun(context: InteractionContext) {
+    public onCancelRun(context: InteractionContext) {
         return this.safeReply(
             context,
             `${Warning} El usuario mencionado no es un miembro válido o yo/tu no pued(e/o) manejar el rol.`,
@@ -55,7 +55,7 @@ export default class BanCommands extends BaseCommand {
         )
     }
 
-    async run(context: InteractionContext, args: Commands.Role.arguments) {
+    public async run(context: InteractionContext, args: Commands.Role.arguments) {
         return Commands.Role.response(context, args)
 
     }
